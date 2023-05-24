@@ -29,8 +29,12 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
         return resultado;
     }
 
-    private NodeBST<K, T> insert(K key, T data, NodeBST<K, T> subtree) {
+    private NodeBST<K, T> insert(K key, T data, NodeBST<K, T> subtree) throws InvalidInformation {
         NodeBST<K, T> NuevoElemento = new NodeBST<K, T>(key, data);
+        if (key == null || data == null){
+            throw new InvalidInformation();
+        }
+
         if (subtree == null) {
             return NuevoElemento;
         } else {
@@ -48,6 +52,9 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
     }
 
     public NodeBST delete(K key, NodeBST subtree) throws NotInTreeException {
+        if (root == null){
+            throw new NotInTreeException();
+        }
         if (subtree == null) {
             return null;
         }
@@ -101,8 +108,12 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
 
     @Override
     public void insert(K key, T data) {
-        root = insert(key, data, root);
-        treeSize ++;
+        try {
+            root = insert(key, data, root);
+            treeSize++;
+        } catch (InvalidInformation e) {
+            System.out.println("No se pueden ingresar valores null");
+        }
     }
 
 
