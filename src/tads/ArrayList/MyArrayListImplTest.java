@@ -1,5 +1,8 @@
 package tads.ArrayList;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class MyArrayListImplTest {
 
 
@@ -11,10 +14,17 @@ class MyArrayListImplTest {
         arrayPrueba.add("Frutilla");
         arrayPrueba.add("Durazno");
         arrayPrueba.add("Pera");
-        System.out.println(arrayPrueba.get(0));
+        assertTrue(arrayPrueba.get(0) == "Frutilla");
+        assertTrue(arrayPrueba.get(1) == "Durazno");
+        assertTrue(arrayPrueba.get(2) == "Pera");
+
+
+       /* System.out.println(arrayPrueba.get(0));
         System.out.println(arrayPrueba.get(1));
         System.out.println(arrayPrueba.get(2));
         System.out.println(arrayPrueba.get(3));
+
+        */
     }
 
 
@@ -23,10 +33,23 @@ class MyArrayListImplTest {
         arrayPrueba.add("Frutilla");
         arrayPrueba.add("Durazno");
         arrayPrueba.add("Pera");
+
+        String resultado0 = arrayPrueba.get(0);
+        String resultado1 = arrayPrueba.get(1);
+        String resultado2 = arrayPrueba.get(2);
+
+        assertEquals("Frutilla", resultado0);
+        assertEquals("Durazno", resultado1);
+        assertEquals("Pera", resultado2);
+
+
+        /*
         System.out.println(arrayPrueba.get(0));
         System.out.println(arrayPrueba.get(1));
         System.out.println(arrayPrueba.get(2));
         System.out.println(arrayPrueba.get(3));
+
+         */
     }
 
 
@@ -35,6 +58,22 @@ class MyArrayListImplTest {
         arrayPrueba.add("Frutilla");
         arrayPrueba.add("Durazno");
         arrayPrueba.add("Pera");
+
+        String resultado0 = arrayPrueba.get(0);
+        String resultado1 = arrayPrueba.get(1);
+        String resultado2 = arrayPrueba.get(2);
+
+        assertEquals("Frutilla", resultado0);
+        assertEquals("Durazno", resultado1);
+        assertEquals("Pera", resultado2);
+
+        arrayPrueba.delete("Frutilla");
+
+        resultado0 = arrayPrueba.get(0);
+
+        assertEquals("Durazno", resultado0);
+
+        /*
         System.out.println(arrayPrueba.get(0));
         System.out.println(arrayPrueba.get(1));
         System.out.println(arrayPrueba.get(2));
@@ -42,6 +81,8 @@ class MyArrayListImplTest {
         System.out.println(arrayPrueba.get(0));
         System.out.println(arrayPrueba.get(1));
         System.out.println(arrayPrueba.get(2));
+
+         */
     }
 
 
@@ -50,9 +91,21 @@ class MyArrayListImplTest {
         arrayPrueba.add("Frutilla");
         arrayPrueba.add("Durazno");
         arrayPrueba.add("Pera");
+
+        boolean resultado0 = arrayPrueba.contains("Frutilla");
+        boolean resultado1 = arrayPrueba.contains("Durazno");
+        boolean resultado2 = arrayPrueba.contains("Pera");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+        assertTrue(resultado2);
+
+
+       /*
         System.out.println(arrayPrueba.contains("Frutilla"));
         System.out.println(arrayPrueba.contains("Durazno"));
         System.out.println(arrayPrueba.contains("Pera"));
+        */
     }
 
 
@@ -61,6 +114,9 @@ class MyArrayListImplTest {
         arrayPrueba.add("Frutilla");
         arrayPrueba.add("Durazno");
         arrayPrueba.add("Pera");
-        System.out.println(arrayPrueba.size());
+
+        //System.out.println(arrayPrueba.size());
+
+        assertEquals(3, arrayPrueba.size());
     }
 }
