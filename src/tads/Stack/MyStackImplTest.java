@@ -1,5 +1,8 @@
 package tads.Stack;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class MyStackImplTest {
 
     MyStackImpl<String> myStackPrueba = new MyStackImpl<>();
@@ -7,10 +10,13 @@ class MyStackImplTest {
 
     @org.junit.jupiter.api.Test
     void isEmpty() {
-        System.out.println("La lista Stack está vacia? " + myStackPrueba.isEmpty());
         myStackPrueba.push("Frutilla");
-        myStackPrueba.push("Durazno");
-        System.out.println("La lista está vacia? " + myStackPrueba.isEmpty());
+        myStackPrueba.push("Naranja");
+        myStackPrueba.push("Banana");
+
+        boolean resultado = myStackPrueba.isEmpty();
+
+        assertEquals(false, resultado);
 
     }
 
@@ -20,8 +26,14 @@ class MyStackImplTest {
         myStackPrueba.push("Frutilla");
         myStackPrueba.push("Durazno");
         myStackPrueba.push("Naranja");
-        System.out.println("La lista Stack está vacia? " + myStackPrueba.isEmpty());
-        System.out.println("La lista Stack tiene " + myStackPrueba.size() + " elementos");
+
+        boolean resultado0 = myStackPrueba.contains("Frutilla");
+        boolean resultado1 = myStackPrueba.contains("Durazno");
+        boolean resultado2 = myStackPrueba.contains("Naranja");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+        assertTrue(resultado2);
 
     }
 
@@ -31,12 +43,20 @@ class MyStackImplTest {
         myStackPrueba.push("Frutilla");
         myStackPrueba.push("Durazno");
         myStackPrueba.push("Naranja");
-        System.out.println("La lista Stack está vacia? " + myStackPrueba.isEmpty());
-        System.out.println("La lista Stack tiene " + myStackPrueba.size() + " elementos");
+
+        boolean resultado0 = myStackPrueba.contains("Frutilla");
+        boolean resultado1 = myStackPrueba.contains("Durazno");
+        boolean resultado2 = myStackPrueba.contains("Naranja");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+        assertTrue(resultado2);
+
         myStackPrueba.pop();
-        System.out.println("La lista Stack tiene " + myStackPrueba.size() + " elementos");
-        System.out.println(myStackPrueba.contains("Durazno"));
-        System.out.println(myStackPrueba.contains("Frutilla"));
+
+        String nuevoResultado = myStackPrueba.top();
+
+       assertEquals("Durazno", nuevoResultado);
 
     }
 
@@ -46,7 +66,10 @@ class MyStackImplTest {
         myStackPrueba.push("Frutilla");
         myStackPrueba.push("Durazno");
         myStackPrueba.push("Naranja");
-        System.out.println(myStackPrueba.top());
+
+        String resultado = myStackPrueba.top();
+
+        assertEquals("Naranja", resultado);
     }
 
 
@@ -55,7 +78,9 @@ class MyStackImplTest {
         myStackPrueba.push("Frutilla");
         myStackPrueba.push("Durazno");
         myStackPrueba.push("Naranja");
-        System.out.println("La lista Stack tiene " + myStackPrueba.size() + " elementos");
+
+        assertEquals(3, myStackPrueba.size());
+
     }
 
 
@@ -64,8 +89,20 @@ class MyStackImplTest {
         myStackPrueba.push("Frutilla");
         myStackPrueba.push("Durazno");
         myStackPrueba.push("Naranja");
+
+        boolean resultado0 = myStackPrueba.contains("Frutilla");
+        boolean resultado1 = myStackPrueba.contains("Durazno");
+        boolean resultado2 = myStackPrueba.contains("Naranja");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+        assertTrue(resultado2);
+
         myStackPrueba.makeEmpty();
-        System.out.println("La lista Stack tiene " + myStackPrueba.size() + " elementos");
+
+        boolean resultado = myStackPrueba.isEmpty();
+
+        assertTrue(resultado);
 
     }
 
@@ -75,10 +112,15 @@ class MyStackImplTest {
         myStackPrueba.push("Frutilla");
         myStackPrueba.push("Durazno");
         myStackPrueba.push("Naranja");
-        System.out.println(myStackPrueba.contains("Durazno"));
-        System.out.println(myStackPrueba.contains("Frutilla"));
-        System.out.println(myStackPrueba.contains("Pera"));
-        System.out.println(myStackPrueba.contains("Naranja"));
+
+        boolean resultado0 = myStackPrueba.contains("Frutilla");
+        boolean resultado1 = myStackPrueba.contains("Durazno");
+        boolean resultado2 = myStackPrueba.contains("Naranja");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+        assertTrue(resultado2);
+
 
     }
 
