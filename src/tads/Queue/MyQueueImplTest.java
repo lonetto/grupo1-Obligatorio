@@ -1,5 +1,8 @@
 package tads.Queue;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class MyQueueImplTest {
 
 
@@ -11,7 +14,12 @@ class MyQueueImplTest {
         pruebaQueue.enqueue("Frutilla");
         pruebaQueue.enqueue("Naranja");
         pruebaQueue.enqueue("Banana");
-        System.out.println("La lista está vacia? " + pruebaQueue.isEmpty());
+
+        boolean resultado = pruebaQueue.isEmpty();
+
+        assertEquals(false, resultado);
+
+        //System.out.println("La lista está vacia? " + pruebaQueue.isEmpty());
     }
 
 
@@ -20,9 +28,20 @@ class MyQueueImplTest {
         pruebaQueue.enqueue("Frutilla");
         pruebaQueue.enqueue("Naranja");
         pruebaQueue.enqueue("Banana");
+
+        boolean resultado0 = pruebaQueue.contains("Frutilla");
+        boolean resultado1 = pruebaQueue.contains("Naranja");
+        boolean resultado2 = pruebaQueue.contains("Banana");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+        assertTrue(resultado2);
+
+        /*
         System.out.println("La lista está vacia? " + pruebaQueue.isEmpty());
         System.out.println(pruebaQueue.getFirst());
         System.out.println("La lista tiene " + pruebaQueue.size() + " elementos");
+        */
     }
 
 
@@ -31,6 +50,24 @@ class MyQueueImplTest {
         pruebaQueue.enqueue("Frutilla");
         pruebaQueue.enqueue("Naranja");
         pruebaQueue.enqueue("Banana");
+
+        boolean resultado0 = pruebaQueue.contains("Frutilla");
+        boolean resultado1 = pruebaQueue.contains("Naranja");
+        boolean resultado2 = pruebaQueue.contains("Banana");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+        assertTrue(resultado2);
+
+        pruebaQueue.dequeue();
+
+        resultado0 = pruebaQueue.contains("Naranja");
+        resultado1 = pruebaQueue.contains("Banana");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+
+        /*
         System.out.println("La lista está vacia? " + pruebaQueue.isEmpty());
         System.out.println(pruebaQueue.getFirst());
         System.out.println("La lista tiene " + pruebaQueue.size() + " elementos");
@@ -38,6 +75,7 @@ class MyQueueImplTest {
         System.out.println(pruebaQueue.getFirst());
         pruebaQueue.dequeue();
         System.out.println(pruebaQueue.getFirst());
+        */
     }
 
 
@@ -46,7 +84,10 @@ class MyQueueImplTest {
         pruebaQueue.enqueue("Frutilla");
         pruebaQueue.enqueue("Naranja");
         pruebaQueue.enqueue("Banana");
-        System.out.println("La lista tiene " + pruebaQueue.size() + " elementos");
+
+        assertEquals(3, pruebaQueue.size());
+
+        //System.out.println("La lista tiene " + pruebaQueue.size() + " elementos");
     }
 
 
@@ -55,9 +96,16 @@ class MyQueueImplTest {
         pruebaQueue.enqueue("Frutilla");
         pruebaQueue.enqueue("Naranja");
         pruebaQueue.enqueue("Banana");
+
+        String resultado0 = pruebaQueue.getFirst();
+
+        assertEquals("Frutilla", resultado0);
+
+        /*
         System.out.println(pruebaQueue.getFirst());
         pruebaQueue.dequeue();
         System.out.println(pruebaQueue.getFirst());
+        */
     }
 
 
@@ -66,9 +114,10 @@ class MyQueueImplTest {
         pruebaQueue.enqueue("Frutilla");
         pruebaQueue.enqueue("Naranja");
         pruebaQueue.enqueue("Banana");
-        System.out.println(pruebaQueue.getLast());
-        pruebaQueue.enqueue("Durazno");
-        System.out.println(pruebaQueue.getLast());
+
+        String resultado0 = pruebaQueue.getLast();
+
+        assertEquals("Banana", resultado0);
     }
 
 
@@ -77,10 +126,21 @@ class MyQueueImplTest {
         pruebaQueue.enqueue("Frutilla");
         pruebaQueue.enqueue("Naranja");
         pruebaQueue.enqueue("Banana");
+
+        boolean resultado0 = pruebaQueue.contains("Frutilla");
+        boolean resultado1 = pruebaQueue.contains("Naranja");
+        boolean resultado2 = pruebaQueue.contains("Banana");
+
+        assertTrue(resultado0);
+        assertTrue(resultado1);
+        assertTrue(resultado2);
+
+        /*
         System.out.println(pruebaQueue.contains("Frutilla"));
         System.out.println(pruebaQueue.contains("Banana"));
         System.out.println(pruebaQueue.contains("Naranja"));
         System.out.println(pruebaQueue.contains("Pera"));
+        */
     }
 
 
