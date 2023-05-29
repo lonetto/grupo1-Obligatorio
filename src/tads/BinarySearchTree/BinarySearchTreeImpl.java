@@ -1,6 +1,9 @@
 package tads.BinarySearchTree;
 
-public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySearchTree<K, T>{
+import tads.LinkedList.MyLinkedList;
+import tads.LinkedList.MyLinkedListImpl;
+
+public class BinarySearchTreeImpl<K extends Comparable<K>, T> implements MyBinarySearchTree<K, T>{
 
     private int treeSize = 0;
     private NodeBST<K, T> root;
@@ -131,5 +134,16 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
     @Override
     public int size() {
         return treeSize;
+    }
+
+    @Override
+    public MyLinkedList<K> inOrder(){
+        MyLinkedList<K> recorrida = new MyLinkedListImpl<>();
+
+        if (root != null) {
+            root.recorridaInOrder(recorrida);
+        }
+
+        return recorrida;
     }
 }

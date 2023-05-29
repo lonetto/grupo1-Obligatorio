@@ -2,9 +2,9 @@ package tads.Heap;
 
 public class MyHeapImpl <T extends Comparable<T>> implements MyHeap<T>{
 
-
     private T[] values;
     private int heapSize;
+
     public MyHeapImpl(int size) {
         this.values = (T[]) new Comparable[size];
         this.heapSize = 0;
@@ -52,7 +52,6 @@ public class MyHeapImpl <T extends Comparable<T>> implements MyHeap<T>{
         }
     }
 
-
     @Override
     public T delete() throws EmptyHeapException {
         T returnValue = null;
@@ -81,9 +80,9 @@ public class MyHeapImpl <T extends Comparable<T>> implements MyHeap<T>{
         return returnValue;
     }
 
-
     @Override
     public int size() {
         return heapSize;
     }
+
 }

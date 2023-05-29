@@ -1,5 +1,7 @@
 package tads.BinarySearchTree;
 
+import tads.LinkedList.MyLinkedList;
+
 public class NodeBST<K, T> {
     private K key;
     private T data;
@@ -11,6 +13,18 @@ public class NodeBST<K, T> {
         this.data = data;
         this.leftChild = null;
         this.rightChild = null;
+    }
+
+    public void recorridaInOrder(MyLinkedList<K> recorrida){
+        if (leftChild != null){
+            leftChild.recorridaInOrder(recorrida);
+        }
+
+        recorrida.add(this.getKey());
+
+        if (rightChild != null) {
+            rightChild.recorridaInOrder(recorrida);
+        }
     }
 
 
