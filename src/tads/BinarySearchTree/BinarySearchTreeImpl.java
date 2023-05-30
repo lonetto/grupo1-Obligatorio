@@ -1,5 +1,7 @@
 package tads.BinarySearchTree;
 
+import tads.BinarySearchTree.exceptions.InvalidInformation;
+import tads.BinarySearchTree.exceptions.NotInTreeException;
 import tads.LinkedList.MyLinkedList;
 import tads.LinkedList.MyLinkedListImpl;
 
