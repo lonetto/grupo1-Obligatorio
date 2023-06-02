@@ -27,7 +27,7 @@ public class User {
         this.verified = verified;
     }
 
-    public User( String name, String location, String description, Date created, long followers, long friends, long favourites, boolean verified) {
+    public User(String name, String location, String description, Date created, long followers, long friends, long favourites, boolean verified) {
         this.name = name;
         this.location = location;
         this.description = description;
