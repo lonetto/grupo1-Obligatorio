@@ -1,15 +1,19 @@
 package entities;
 
+import java.util.Date;
+
 public class Tweet {
 
     private long id;
     private String content;
     private String source;
     private boolean isRetweet;
+    private Date date;
     private User user;
 
-    public Tweet(long id, String content, String source, boolean isRetweet, User user) {
+    public Tweet(long id, Date date, String content, String source, boolean isRetweet) {
         this.id = id;
+        this.date = date;
         this.content = content;
         this.source = source;
         this.isRetweet = isRetweet;
@@ -22,6 +26,14 @@ public class Tweet {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getContent() {

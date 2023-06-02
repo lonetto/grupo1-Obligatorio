@@ -53,4 +53,60 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public long getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(long followers) {
+        this.followers = followers;
+    }
+
+    public long getFriends() {
+        return friends;
+    }
+
+    public void setFriends(long friends) {
+        this.friends = friends;
+    }
+
+    public long getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(long favourites) {
+        this.favourites = favourites;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 }

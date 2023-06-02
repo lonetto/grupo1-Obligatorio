@@ -2,6 +2,7 @@ package entities;
 
 
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
 
 public class HashTag {
 
@@ -12,7 +13,7 @@ public class HashTag {
     public HashTag(long id, String text) {
         this.id = id;
         this.text = text;
-        this.tweets = tweets;
+        this.tweets =  new MyLinkedListImpl<>();
     }
 
     public long getId() {

@@ -2,11 +2,13 @@ package entities;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
 import uy.edu.um.prog2.adt.tads.Hash.MyClosedHashImpl;
 import uy.edu.um.prog2.adt.tads.Hash.MyHash;
 
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.util.Date;
 
 
@@ -46,13 +48,15 @@ public class SistemaCentral {
                 boolean user_verified = Boolean.parseBoolean(line[8]);
                 //Date date = line[9];
                 String text = line[10];
-                //Hashtags resolverlo
+                //Hashtag resolver porque es un arraylist
                 String source = line[12];
                 boolean is_retweet = Boolean.parseBoolean(line[13]);
                 //Agregar las funciones
                 agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified); //Arreglar el usercreated. Esta bien esta funcion, es decir, agregar los paramentros restantes de user y a su vez sacar en el cosntructor el parametro id?
                 //Para agregar tweet uso el constructor que ya hay en tweet o creo un nuevo constructor al cual tambien le agrego la variable date de cuando fue creado el tweet?
-                //Para agregar un hashtag, creo un nuevo constructor sin el parametro id o en el parametro id tambien debo poner el tweet_id??
+                agregarTweet(tweet_id, date, text, source, is_retweet);
+                //Para agregar un hashtag, creo un nuevo constructor sin el parametro id o en el parametro id tambien debo poner el tweet_id?? No entiendo que va en el parametro id en la clase hashtag
+                agregarHashtag();
 
 
             }catch (Exception e){
@@ -76,7 +80,7 @@ public class SistemaCentral {
         return (hashUsers.get(username)!=null);
     }
 
-    public void agregarTweet(long tweet_id) {
+    public void agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet) {
 
     }
 
