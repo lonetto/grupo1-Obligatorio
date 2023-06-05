@@ -9,6 +9,7 @@ import uy.edu.um.prog2.adt.tads.Hash.MyHash;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -41,7 +42,13 @@ public class SistemaCentral {
                 String user_name = line[1];
                 String user_location = line[2];
                 String user_description = line[3];
-                //Date user_created = line[4];
+
+                //Esta bien esto que hice para convertir las fechas del csv a formate Date?? Si esta bien entonces debo hacerlo para la linea 9
+                String dateString = line[4];
+                SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy HH:mm:ss");
+                Date date = format.parse(dateString);
+
+
                 long user_followers = Long.parseLong(line[5]);
                 long user_friends = Long.parseLong(line[6]);
                 long user_favourites = Long.parseLong(line[7]);
