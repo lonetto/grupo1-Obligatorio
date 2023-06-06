@@ -42,18 +42,18 @@ public class SistemaCentral {
                 String user_name = line[1];
                 String user_location = line[2];
                 String user_description = line[3];
-
-                //Esta bien esto que hice para convertir las fechas del csv a formate Date?? Si esta bien entonces debo hacerlo para la linea 9
+                //Las siguientes 3 lineas son para parsear las fechas desde tipo String a tipo Date
                 String dateString = line[4];
                 SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy HH:mm:ss");
-                Date date = format.parse(dateString);
-
-
+                Date user_created = format.parse(dateString);
                 long user_followers = Long.parseLong(line[5]);
                 long user_friends = Long.parseLong(line[6]);
                 long user_favourites = Long.parseLong(line[7]);
                 boolean user_verified = Boolean.parseBoolean(line[8]);
-                //Date date = line[9];
+                //Las siguientes 3 lineas son para parsear las fechas desde tipo String a tipo Date
+                String dateString1 = line[9];
+                SimpleDateFormat format1 =  new SimpleDateFormat("M/d/yyyy HH:mm:ss");
+                Date date = format1.parse(dateString1);
                 String text = line[10];
                 //Hashtag resolver porque es un arraylist
                 String source = line[12];
