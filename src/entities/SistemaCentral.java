@@ -15,9 +15,10 @@ import java.util.Date;
 
 public class SistemaCentral {
 
-    private MyHash<String, User> hashUsers = new MyClosedHashImpl<>(20000);
+    private MyHash<Long, User> hashUsers = new MyClosedHashImpl<>(20000);
     private MyHash<Long, Tweet> hashTweets = new MyClosedHashImpl<>(200000);
     private MyHash<String, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
+    private long idUsers = 1;
 
 
     public void leerCSV(String path) throws CsvValidationException, IOException, OutOfMemoryError {
@@ -59,10 +60,8 @@ public class SistemaCentral {
                 String source = line[12];
                 boolean is_retweet = Boolean.parseBoolean(line[13]);
                 //Agregar las funciones
-                agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified); //Arreglar el usercreated. Esta bien esta funcion, es decir, agregar los paramentros restantes de user y a su vez sacar en el cosntructor el parametro id?
-                //Para agregar tweet uso el constructor que ya hay en tweet o creo un nuevo constructor al cual tambien le agrego la variable date de cuando fue creado el tweet?
+                agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
                 agregarTweet(tweet_id, date, text, source, is_retweet);
-                //Para agregar un hashtag, creo un nuevo constructor sin el parametro id o en el parametro id tambien debo poner el tweet_id?? No entiendo que va en el parametro id en la clase hashtag
                 agregarHashtag();
 
 
@@ -77,14 +76,15 @@ public class SistemaCentral {
 
     public void agregarUser(String user_name, String user_location, String user_description, Date user_created, long user_followers, long user_friends, long user_favourites, boolean user_verified) {
         User user1;
-        if(!existeUser(user_name)){
-            user1 = new User(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
-            hashUsers.put(user_name, user1);
+        if(!existeUser(idUsers)){
+            user1 = new User(idUsers, user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
+            hashUsers.put(idUsers, user1);
+            idUsers++;
         }
     }
 
-    public boolean existeUser(String username){
-        return (hashUsers.get(username)!=null);
+    public boolean existeUser(Long idUsers){
+        return (hashUsers.get(idUsers)!=null);
     }
 
     public void agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet) {

@@ -27,6 +27,7 @@ public class User {
         this.verified = verified;
     }
 
+    /*
     public User(String name, String location, String description, Date created, long followers, long friends, long favourites, boolean verified) {
         this.name = name;
         this.location = location;
@@ -37,6 +38,8 @@ public class User {
         this.favourites = favourites;
         this.verified = verified;
     }
+
+     */
 
     public long getId() {
         return id;
