@@ -17,8 +17,9 @@ public class SistemaCentral {
 
     private MyHash<Long, User> hashUsers = new MyClosedHashImpl<>(20000);
     private MyHash<Long, Tweet> hashTweets = new MyClosedHashImpl<>(200000);
-    private MyHash<String, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
+    private MyHash<Long, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
     private long idUsers = 1;
+    private long idHashtag = 1;
 
 
     public void leerCSV(String path) throws CsvValidationException, IOException, OutOfMemoryError {
@@ -96,15 +97,15 @@ public class SistemaCentral {
         return false;
     }
 
-    public void agregarHashtag(){
-
+    public void agregarHashtag(String text){
+        HashTag hashtag1;
+        if(!existeHashtag(idHashtag)){
+            hashtag1 = new HashTag(idHashtag, text);
+            hashHashtag.put(idHashtag, hashtag1);
+            idHashtag++;
+        }
     }
 
-    public boolean existeHashtag(){
-
-        return false;
-    }
-
-
+    public boolean existeHashtag(Long idHashtag){ return (hashHashtag.get(idHashtag)!= null); }
 
 }
