@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class SistemaCentral {
 
-    private MyHash<Long, User> hashUsers = new MyClosedHashImpl<>(20000);
+    private MyHash<String, User> hashUsers = new MyClosedHashImpl<>(20000);
     private MyHash<Long, Tweet> hashTweets = new MyClosedHashImpl<>(200000);
     private MyHash<Long, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
     private long idUsers = 1;
@@ -55,37 +55,45 @@ public class SistemaCentral {
                 //Las siguientes 3 lineas son para parsear las fechas desde tipo String a tipo Date
                 String dateString1 = line[9];
                 SimpleDateFormat format1 =  new SimpleDateFormat("M/d/yyyy HH:mm:ss");
+                //No podriamos usar el format de la linea 49?
                 Date date = format1.parse(dateString1);
                 String text = line[10];
                 //Hashtag resolver porque es un arraylist
+                String hashtag = line[11];
+                hashtag = hashtag.substring(1, hashtag.length() - 1);
+                hashtag = hashtag.replace("'", " ");
+                hashtag.split(",");
+                //Me queda recorrer los splits y guardarlos por separado
                 String source = line[12];
                 boolean is_retweet = Boolean.parseBoolean(line[13]);
+
                 //Agregar las funciones
                 agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
+                //Nos queda agregar el user, no?
                 agregarTweet(tweet_id, date, text, source, is_retweet);
-                agregarHashtag();
-
+                agregarHashtag(hashtag);
 
             }catch (Exception e){
-                //no agregar nada
+                //No agregar nada
             }
 
         }
 
     }
 
-
+    //Cambie lo de idUser
     public void agregarUser(String user_name, String user_location, String user_description, Date user_created, long user_followers, long user_friends, long user_favourites, boolean user_verified) {
         User user1;
-        if(!existeUser(idUsers)){
+        if(!existeUser(user_name)){
             user1 = new User(idUsers, user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
-            hashUsers.put(idUsers, user1);
+            hashUsers.put(user_name, user1);
             idUsers++;
         }
     }
 
-    public boolean existeUser(Long idUsers){
-        return (hashUsers.get(idUsers)!=null);
+    //Capaz estaria bueno que retornara el user
+    public boolean existeUser(String user_name){
+        return (hashUsers.get(user_name)!=null);
     }
 
     public void agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet) {
@@ -93,7 +101,6 @@ public class SistemaCentral {
     }
 
     public boolean existeTweet(){
-
         return false;
     }
 
@@ -106,6 +113,7 @@ public class SistemaCentral {
         }
     }
 
-    public boolean existeHashtag(Long idHashtag){ return (hashHashtag.get(idHashtag)!= null); }
-
+    public boolean existeHashtag(Long idHashtag){
+        return (hashHashtag.get(idHashtag)!= null);
+    }
 }

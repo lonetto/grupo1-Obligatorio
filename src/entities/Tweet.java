@@ -11,7 +11,7 @@ public class Tweet {
     private Date date;
     private User user;
 
-    public Tweet(long id, Date date, String content, String source, boolean isRetweet) {
+    public Tweet(long id, Date date, String content, String source, boolean isRetweet, User user) {
         this.id = id;
         this.date = date;
         this.content = content;
