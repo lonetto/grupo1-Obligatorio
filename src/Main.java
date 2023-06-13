@@ -1,5 +1,5 @@
 import entities.SistemaCentral;
-import com.opencsv.exceptions.CsvValidationException;;
+//import com.opencsv.exceptions.CsvValidationException;;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static void main(String[] args) throws CsvValidationException, IOException, ParseException {
+    public static void main(String[] args) throws  IOException, ParseException {// CsvValidationException,
         long inicio = System.currentTimeMillis();
         System.out.println("CARGANDO DATOS...");
         SistemaCentral manager = new SistemaCentral();
