@@ -11,6 +11,7 @@ public class Tweet {
     private Date date;
     private User user;
 
+
     public Tweet(long id, Date date, String content, String source, boolean isRetweet, User user) {
         this.id = id;
         this.date = date;
@@ -18,6 +19,10 @@ public class Tweet {
         this.source = source;
         this.isRetweet = isRetweet;
         this.user = user;
+    }
+    //Agregamos funcion para consultas 3 y 4
+    public boolean checkDate(Date date){
+        return this.date.getDay() == date.getDay() && this.date.getMonth() == date.getMonth() && this.date.getYear() == date.getYear();
     }
 
     public long getId() {

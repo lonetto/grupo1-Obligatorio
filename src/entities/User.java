@@ -13,6 +13,7 @@ public class User {
     private long friends;
     private long favourites;
     private boolean verified;
+    private int countTweets;
 
 
     public User(long id, String name, String location, String description, Date created, long followers, long friends, long favourites, boolean verified) {
@@ -25,6 +26,7 @@ public class User {
         this.friends = friends;
         this.favourites = favourites;
         this.verified = verified;
+        this.countTweets = 0;
     }
 
     /*
@@ -40,6 +42,14 @@ public class User {
     }
 
      */
+
+    public int getCountTweets() {
+        return countTweets;
+    }
+
+    public void setCountTweets(int countTweets) {
+        this.countTweets = countTweets;
+    }
 
     public long getId() {
         return id;

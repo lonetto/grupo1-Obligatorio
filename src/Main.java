@@ -1,13 +1,15 @@
+import entities.HashTag;
 import entities.SistemaCentral;
 //import com.opencsv.exceptions.CsvValidationException;;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
 
 
-    public static void main(String[] args) throws  IOException, ParseException {// CsvValidationException,
+    public static void main(String[] args) throws CsvValidationException,IOException, ParseException {
         long inicio = System.currentTimeMillis();
         System.out.println("CARGANDO DATOS...");
         SistemaCentral manager = new SistemaCentral();
@@ -79,13 +81,40 @@ public class Main {
     }
 
 
-    public static void report3 () {
-
+    public int report3 (Date date, SistemaCentral manager) {
+        int count = 0;
+        for (int i = 0; i < manager.getHashHashtag().size(); i++) {
+            HashTag hashtag = manager.getHashHashtag().get(manager.getHashHashtag().getListaDeKeys().get(i));
+            for (int j = 0; j < hashtag.getTweets().size(); j++) {
+                if (hashtag.getTweets().get(j).checkDate(date)) {
+                    count++;
+                    break;
+                }
+            }
+        }
+        return count;
     }
 
 
-    public static void report4() {
-
+    public String report4(Date date, SistemaCentral manager) {
+        int count = 0;
+        int maxCount = 0;
+        HashTag mostUsed = null;
+        for (int i = 0; i < manager.getHashHashtag().size(); i++) {
+            HashTag hashtag = manager.getHashHashtag().get(manager.getHashHashtag().getListaDeKeys().get(i));
+            if (hashtag.getText().toUpperCase() != "F1") {
+                for (int j = 0; j < hashtag.getTweets().size(); j++) {
+                    if (hashtag.getTweets().get(j).checkDate(date)) {
+                        count++;
+                    }
+                }
+                if (count > maxCount) {
+                    maxCount = count;
+                    mostUsed = hashtag;
+                }
+            }
+        }
+        return mostUsed.getText();
     }
 
 
