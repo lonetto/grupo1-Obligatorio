@@ -107,6 +107,7 @@ public class SistemaCentral {
         if (tweet != null){
             tweet = new Tweet(tweet_id, date, content, source, is_retweet, user);
             hashTweets.put(tweet_id, tweet);
+            user.addTweet(tweet);
         }
         return tweet;
     }

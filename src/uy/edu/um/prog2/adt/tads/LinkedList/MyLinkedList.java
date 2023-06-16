@@ -17,7 +17,5 @@ public interface MyLinkedList<T> {
     public void addFirst(T value);
 
     void addLast(T value);
-
-
-
+    public void addpos(int position, T value);
 }

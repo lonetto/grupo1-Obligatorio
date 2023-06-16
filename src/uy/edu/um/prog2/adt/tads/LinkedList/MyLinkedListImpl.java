@@ -23,6 +23,27 @@ public class MyLinkedListImpl<T> implements MyLinkedList<T> {
             tmp.setNext(newNode);
         }
     }
+    @Override
+    public void addpos(int position, T value) {
+        // Manejo de casos especiales
+        if (position == 0) {
+            addFirst(value);
+            return;
+        }
+        if (position >= size()) {
+            addLast(value);
+            return;
+        }
+
+        NodeLinkedList<T> newNode = new NodeLinkedList<>(value);
+        NodeLinkedList<T> tmp = head;
+        for (int i = 0; i < position - 1; i++) {
+            tmp = tmp.getNext();
+        }
+        newNode.setNext(tmp.getNext());
+        tmp.setNext(newNode);
+    }
+
 
     @Override
     public boolean remove(int position) {

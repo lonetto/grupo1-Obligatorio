@@ -1,5 +1,8 @@
 import entities.HashTag;
 import entities.SistemaCentral;
+import entities.User;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
 //import com.opencsv.exceptions.CsvValidationException;;
 import java.io.IOException;
 import java.text.ParseException;
@@ -75,9 +78,28 @@ public class Main {
 
     }
 
-
-    public static void report2 () {
-
+    // O(n^2),mal
+    public MyLinkedList report2 (SistemaCentral manager) {
+        MyLinkedList<User> topUsers = new MyLinkedListImpl<>();
+        int totalKeys = manager.getHashUsers().size();
+        for (int i = 0; i < totalKeys; i++) {
+            User user = manager.getHashUsers().get(manager.getHashUsers().getListaDeKeys().get(i));
+            int countTweets = user.getCountTweets();
+            int pos = topUsers.size();
+            for (int j = 0; j < topUsers.size(); j++) {
+                if (countTweets > topUsers.get(j).getCountTweets()) {
+                    pos = j;
+                    break;
+                }
+            }
+            if (pos < 15) {
+                topUsers.addpos(pos, user);
+                if (topUsers.size() > 15) {
+                    topUsers.remove(15);
+                }
+            }
+        }
+        return topUsers;
     }
 
 

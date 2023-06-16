@@ -1,5 +1,8 @@
 package entities;
 
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
+
 import java.util.Date;
 
 public class User {
@@ -14,6 +17,7 @@ public class User {
     private long favourites;
     private boolean verified;
     private int countTweets;
+    public MyLinkedList<Tweet> tweets;
 
 
     public User(long id, String name, String location, String description, Date created, long followers, long friends, long favourites, boolean verified) {
@@ -27,6 +31,7 @@ public class User {
         this.favourites = favourites;
         this.verified = verified;
         this.countTweets = 0;
+        this.tweets = new MyLinkedListImpl<>();
     }
 
     /*
@@ -42,7 +47,10 @@ public class User {
     }
 
      */
-
+    public void addTweet(Tweet tweet) {
+        this.tweets.add(tweet);
+        this.countTweets++;
+    }
     public int getCountTweets() {
         return countTweets;
     }
