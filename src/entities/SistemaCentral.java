@@ -54,9 +54,12 @@ public class SistemaCentral {
                 String dateString = line[4];
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date user_created = format.parse(dateString);
-                long user_followers = Long.parseLong(line[5]);
-                long user_friends = Long.parseLong(line[6]);
-                long user_favourites = Long.parseLong(line[7]);
+                //long user_followers = Long.parseLong(line[5]);
+                double user_followers = Double.parseDouble(line[5]);
+                //long user_friends = Long.parseLong(line[6]);
+                double user_friends = Double.parseDouble(line[6]);
+                //long user_favourites = Long.parseLong(line[7]);
+                double user_favourites = Double.parseDouble(line[7]);
                 boolean user_verified = Boolean.parseBoolean(line[8]);
                 String dateString1 = line[9];
                 Date date = format.parse(dateString1);
@@ -88,7 +91,7 @@ public class SistemaCentral {
     }
 
     //Cambie lo de idUser e hice que lo retornara
-    public User agregarUser(String user_name, String user_location, String user_description, Date user_created, long user_followers, long user_friends, long user_favourites, boolean user_verified) {
+    public User agregarUser(String user_name, String user_location, String user_description, Date user_created, double user_followers, double user_friends, double user_favourites, boolean user_verified) {
         User user1 = existeUser(user_name);
         if(user1 != null){
             user1 = new User(idUsers, user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);

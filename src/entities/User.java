@@ -12,15 +12,15 @@ public class User {
     private String location;
     private String description;
     private Date created;
-    private long followers;
-    private long friends;
-    private long favourites;
+    private double followers;
+    private double friends;
+    private double favourites;
     private boolean verified;
     private int countTweets;
     public MyLinkedList<Tweet> tweets;
 
 
-    public User(long id, String name, String location, String description, Date created, long followers, long friends, long favourites, boolean verified) {
+    public User(long id, String name, String location, String description, Date created, double followers, double friends, double favourites, boolean verified) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -99,27 +99,31 @@ public class User {
         this.created = created;
     }
 
-    public long getFollowers() {
+    public double getFollowers() {
         return followers;
     }
 
-    public void setFollowers(long followers) {
-        this.followers = followers;
-    }
-
-    public long getFriends() {
+    public double getFriends() {
         return friends;
     }
 
-    public void setFriends(long friends) {
-        this.friends = friends;
-    }
-
-    public long getFavourites() {
+    public double getFavourites() {
         return favourites;
     }
 
-    public void setFavourites(long favourites) {
+    public void setFollowers(double followers) {
+        this.followers = followers;
+    }
+
+
+
+    public void setFriends(double friends) {
+        this.friends = friends;
+    }
+
+
+
+    public void setFavourites(double favourites) {
         this.favourites = favourites;
     }
 
