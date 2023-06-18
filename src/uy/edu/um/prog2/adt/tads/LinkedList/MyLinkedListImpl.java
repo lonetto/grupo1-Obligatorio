@@ -3,11 +3,16 @@ package uy.edu.um.prog2.adt.tads.LinkedList;
 public class MyLinkedListImpl<T> implements MyLinkedList<T> {
 
     private NodeLinkedList<T> head; /* Primer elemento de la lista */
+    private int size;
 
-    public MyLinkedListImpl() { this.head = head; }
+    public MyLinkedListImpl() {
+        this.head = head;
+        this.size = 0;
+    }
 
-    public MyLinkedListImpl(T valor){
+    public MyLinkedListImpl(T valor) {
         this.head = new NodeLinkedList(valor);
+        this.size = 1;
     }
 
     @Override
@@ -22,6 +27,7 @@ public class MyLinkedListImpl<T> implements MyLinkedList<T> {
             NodeLinkedList<T> newNode = new NodeLinkedList(value);
             tmp.setNext(newNode);
         }
+        this.size++;
     }
     @Override
     public void addpos(int position, T value) {
@@ -58,6 +64,7 @@ public class MyLinkedListImpl<T> implements MyLinkedList<T> {
         //Cuando la posicion que se desea borrar es la cero
         if(position == 0){
             this.head = this.head.getNext();
+            this.size--;
             return true;
         } else{
             //Cuando la posicion que se desea borrar es cualquiera de la lista
@@ -67,6 +74,7 @@ public class MyLinkedListImpl<T> implements MyLinkedList<T> {
                 count ++;
             }
             tmp.setNext(tmp.getNext().getNext());
+            this.size--;
             return true;
         }
     }
@@ -91,16 +99,7 @@ public class MyLinkedListImpl<T> implements MyLinkedList<T> {
 
     @Override
     public int size() {
-        int count = 0;
-        NodeLinkedList<T> tmp = this.head;
-        if(tmp == null) {
-            return 0;
-        }
-        while (tmp != null) {
-            tmp = tmp.getNext();
-            count++;
-        }
-        return count;
+        return this.size;
     }
 
     @Override
