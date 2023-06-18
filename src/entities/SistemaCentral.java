@@ -1,7 +1,7 @@
 package entities;
 
-//import com.opencsv.CSVReader;
-//import com.opencsv.exceptions.CsvValidationException;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
 import uy.edu.um.prog2.adt.tads.Hash.MyClosedHashImpl;
 import uy.edu.um.prog2.adt.tads.Hash.MyHash;
@@ -129,6 +129,7 @@ public class SistemaCentral {
         return (hashHashtag.get(idHashtag)!= null);
     }
 
+
     public MyHash<String, User> getHashUsers() {
         return hashUsers;
     }
@@ -152,5 +153,4 @@ public class SistemaCentral {
     public void setHashHashtag(MyHash<Long, HashTag> hashHashtag) {
         this.hashHashtag = hashHashtag;
     }
-}
 }

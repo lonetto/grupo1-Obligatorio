@@ -3,7 +3,7 @@ import entities.SistemaCentral;
 import entities.User;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
-//import com.opencsv.exceptions.CsvValidationException;;
+import com.opencsv.exceptions.CsvValidationException;;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
