@@ -1,11 +1,13 @@
 import entities.HashTag;
 import entities.SistemaCentral;
+import entities.Tweet;
 import entities.User;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
 import com.opencsv.exceptions.CsvValidationException;;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -18,6 +20,7 @@ public class Main {
         SistemaCentral manager = new SistemaCentral();
         manager.leerCSV("sources/f1_dataset_test.csv");
         System.out.println("DATOS CARGADOS CORRECTAMENTE");
+        manager.cargarPilotos();
         long fin = System.currentTimeMillis();
         System.out.println(fin-inicio + " milisegundos");
         showMenu(manager);
@@ -76,9 +79,21 @@ public class Main {
 
 
 
-    public static void report1 () {
+    public static void report1 (SistemaCentral manager) {
+
+        //Permito ingresar los parametros de mes y año en la forma que se especifica en la letra
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el mes (número) para filtrar los tweets: ");
+        int mes = Integer.parseInt(sc.nextLine());
+        System.out.println("Ingrese el año para filtrar los tweets: ");
+        int año = Integer.parseInt(sc.nextLine());
+
+        //
 
     }
+
+
+
 
     // O(n^2),mal
     public MyLinkedList report2 (SistemaCentral manager) {
@@ -142,7 +157,11 @@ public class Main {
     }
 
 
-    public static void report5 () {
+    public static void report5 (SistemaCentral manager) {
+        long inicio = System.currentTimeMillis();
+
+
+
 
     }
 

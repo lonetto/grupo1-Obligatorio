@@ -1,11 +1,15 @@
 package entities;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Calendar;
+import java.util.Scanner;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.RFC4180Parser;
 import com.opencsv.exceptions.CsvValidationException;
 import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
+import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayListImpl;
 import uy.edu.um.prog2.adt.tads.Hash.MyClosedHashImpl;
 import uy.edu.um.prog2.adt.tads.Hash.MyHash;
 import com.opencsv.CSVParserBuilder;
@@ -13,6 +17,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 import com.opencsv.RFC4180Parser;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -31,6 +37,7 @@ public class SistemaCentral {
     private MyHash<String, User> hashUsers = new MyClosedHashImpl<>(20000);
     private MyHash<Long, Tweet> hashTweets = new MyClosedHashImpl<>(200000);
     private MyHash<Long, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
+    private MyArrayList<String> drivers = new MyArrayListImpl<>(21);
     private long idUsers = 1;
     private long idHashtag = 1;
 
@@ -80,6 +87,34 @@ public class SistemaCentral {
     }
 
      */
+
+    public void cargarPilotos() {
+        try {
+            File file = new File("sources/drivers.txt");
+            Scanner scanner = new Scanner(file);
+
+            // Mientras haya una siguiente línea en el archivo, agregar la línea (nombre del piloto) a la lista
+            while (scanner.hasNextLine()) {
+                String pilot = scanner.nextLine();
+                drivers.add(pilot);
+            }
+
+            // Cerrar el escáner para liberar recursos
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Ocurrió un error al leer el archivo.");
+            e.printStackTrace();
+        }
+
+        /*
+        // Imprimir los nombres de los pilotos para verificar
+        for (int i = 0; i < drivers.size(); i++) {
+            String pilot = drivers.get(i);
+            System.out.println(pilot);
+        }
+
+         */
+    }
 
 
     public void agregarTodo(String[] line) {
@@ -178,6 +213,43 @@ public class SistemaCentral {
         return (hashHashtag.get(idHashtag)!= null);
     }
 
+    //Report 1
+    public MyArrayList<Tweet> obtenerPilotosMasMencionadosEnTweetsPorMesYAño(int mes, int año) {
+
+        //Creo un arraylist en el cual estaran los tweets filtrados
+        MyArrayList<Tweet> tweetsFiltrados = new MyArrayListImpl<>(20000);
+
+        for(int i = 0; i < hashTweets.size(); i++){
+            Tweet tweet = hashTweets.get(hashTweets.getListaDeKeys().get(i));
+            int tweetMes = tweet.getDate().getMonth() + 1;  // Se suma 1 ya que los meses en Date van de 0 a 11
+
+            if (tweetMes == mes && tweet.getDate().getYear() + 1900 == año) {
+
+
+            }
+        }
+        return tweetsFiltrados;
+    }
+
+    //Report 5
+    public MyArrayList<User> lista7UsuariosConMasFavoritos(){
+
+        MyArrayList<User> list1 = new MyArrayListImpl(7);
+
+        for(int i = 0; i < hashUsers.size(); i++){
+            String userKey = hashUsers.keyListaKeys(i);
+            User user = hashUsers.get(userKey);
+            double favoritos = user.getFavourites();
+
+
+
+
+
+        }
+
+        return list1;
+    }
+
 
     public MyHash<String, User> getHashUsers() {
         return hashUsers;
@@ -202,4 +274,12 @@ public class SistemaCentral {
     public void setHashHashtag(MyHash<Long, HashTag> hashHashtag) {
         this.hashHashtag = hashHashtag;
     }
+    public MyArrayList<String> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(MyArrayList<String> drivers) {
+        this.drivers = drivers;
+    }
+
 }
