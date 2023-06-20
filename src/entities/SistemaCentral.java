@@ -18,6 +18,7 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 import com.opencsv.RFC4180Parser;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -232,19 +233,31 @@ public class SistemaCentral {
     }
 
     //Report 5
-    public MyArrayList<User> lista7UsuariosConMasFavoritos(){
-
-        MyArrayList<User> list1 = new MyArrayListImpl(7);
+    public MyLinkedList<User> lista7UsuariosConMasFavoritos(){
+        MyLinkedList<User> list1 = new MyLinkedListImpl<>();
 
         for(int i = 0; i < hashUsers.size(); i++){
             String userKey = hashUsers.keyListaKeys(i);
             User user = hashUsers.get(userKey);
             double favoritos = user.getFavourites();
 
+            // Encuentra la posición para insertar al usuario.
+            int pos = list1.size();
+            for (int j = 0; j < list1.size(); j++) {
+                if (favoritos > list1.get(j).getFavourites()) {
+                    pos = j;
+                    break;
+                }
+            }
 
-
-
-
+            // Si la posición es menor a 7, inserta al usuario.
+            if (pos < 7) {
+                list1.add(pos, user);
+                // Si el tamaño de la lista es mayor a 7, elimina el último usuario.
+                if (list1.size() > 7) {
+                    list1.remove(7);
+                }
+            }
         }
 
         return list1;
