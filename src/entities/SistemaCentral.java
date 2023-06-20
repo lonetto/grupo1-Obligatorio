@@ -1,10 +1,20 @@
 package entities;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
+import com.opencsv.RFC4180Parser;
 import com.opencsv.exceptions.CsvValidationException;
 import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
 import uy.edu.um.prog2.adt.tads.Hash.MyClosedHashImpl;
 import uy.edu.um.prog2.adt.tads.Hash.MyHash;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
+import com.opencsv.RFC4180Parser;
+import java.io.FileReader;
+import java.io.IOException;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,15 +36,47 @@ public class SistemaCentral {
 
 
     public void leerCSV(String path) throws CsvValidationException, IOException, OutOfMemoryError {
-        CSVReader csvReader = new CSVReader(new FileReader(path));
 
         String[] line;
+        int i= 0; RFC4180Parser rfc4180Parser = new RFC4180Parser();
+        CSVParserBuilder csvParserBuilder = new CSVParserBuilder();
+        csvParserBuilder.withSeparator(',').withQuoteChar('"');
+
+        FileReader filereader = new FileReader(path);
+        CSVReader csvReader = new CSVReaderBuilder(filereader)
+                .withSkipLines(1)
+                .withCSVParser(rfc4180Parser)
+                .build();
+
         while ((line = csvReader.readNext()) != null) {
             //String[] line = csvsample;
+            i=i+1;
+            System.out.println(i);
+           // if(line.length != 14){
+             //   line = procesarLine(line);
+               // System.out.println(line);
+            //}
             agregarTodo(line);
+
+
         }
     }
 
+    private String[] procesarLine(String[] line) {
+        String [] nuevalinea = new String[14];
+        int i=0;
+        for (String item : line) {
+            String[] splitItem;
+            if(i==10 || i == 3 || item.contains("[")){splitItem = new String[]{item};}
+            else {  splitItem = item.split("\\,");}
+
+            for (String item2 : splitItem) {
+                nuevalinea[i]=item2;
+                i=i+1;
+            }
+        }
+        return  nuevalinea;
+    }
 
 
     public void agregarTodo(String[] line) {
@@ -46,6 +88,7 @@ public class SistemaCentral {
         }
         if (noVacios == 14){
             try {
+
                 long tweet_id = Long.parseLong(line[0]);
                 String user_name = line[1];
                 String user_location = line[2];
