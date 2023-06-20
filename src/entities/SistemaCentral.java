@@ -50,8 +50,8 @@ public class SistemaCentral {
 
         while ((line = csvReader.readNext()) != null) {
             //String[] line = csvsample;
-            i=i+1;
-            System.out.println(i);
+            //i=i+1;
+            //System.out.println(i);
            // if(line.length != 14){
              //   line = procesarLine(line);
                // System.out.println(line);
@@ -62,6 +62,7 @@ public class SistemaCentral {
         }
     }
 
+    /*
     private String[] procesarLine(String[] line) {
         String [] nuevalinea = new String[14];
         int i=0;
@@ -77,6 +78,8 @@ public class SistemaCentral {
         }
         return  nuevalinea;
     }
+
+     */
 
 
     public void agregarTodo(String[] line) {
