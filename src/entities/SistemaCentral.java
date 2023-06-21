@@ -252,7 +252,7 @@ public class SistemaCentral {
 
             // Si la posición es menor a 7, inserta al usuario.
             if (pos < 7) {
-                list1.add(pos, user);
+                list1.addpos(pos, user);
                 // Si el tamaño de la lista es mayor a 7, elimina el último usuario.
                 if (list1.size() > 7) {
                     list1.remove(7);

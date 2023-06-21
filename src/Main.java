@@ -60,7 +60,7 @@ public class Main {
 
             }
             else if (numeroIngresado == 5){
-
+                report5(manager);
             }
             else if (numeroIngresado == 6){
 
@@ -159,10 +159,14 @@ public class Main {
 
     public static void report5 (SistemaCentral manager) {
         long inicio = System.currentTimeMillis();
-
-
-
-
+        MyLinkedList<User> x = manager.lista7UsuariosConMasFavoritos();
+        for(int i = 0; i < x.size(); i++){
+            System.out.println(i);
+            System.out.println("-->Usuario: " + x.get(i).getName());
+            System.out.println("-->Favoritos: " + x.get(i).getFavourites());
+        }
+        long fin = System.currentTimeMillis();
+        System.out.println(fin-inicio + "milisegundos");
     }
 
 
