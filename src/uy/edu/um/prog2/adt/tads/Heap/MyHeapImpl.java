@@ -47,9 +47,10 @@ public class MyHeapImpl <T extends Comparable<T>> implements MyHeap<T>{
         int position = heapSize;
         heapSize++;
         values[position] = value;
-        while(values[position].compareTo(values[getFatherPosition(position)])>0 && position !=0){
+        while (values[position].compareTo(values[getFatherPosition(position)]) < 0 && position != 0) {
+            T temp = values[position];
             values[position] = values[getFatherPosition(position)];
-            values[getFatherPosition(position)] = value;
+            values[getFatherPosition(position)] = temp;
             position = getFatherPosition(position);
         }
     }
@@ -66,25 +67,44 @@ public class MyHeapImpl <T extends Comparable<T>> implements MyHeap<T>{
         } else {
             values[0] = values[heapSize - 1];
             int position = 0;
-            int childMaxPosition = maxPosition(getLeftChildPosition(position),
+            int childMinPosition = minPosition(getLeftChildPosition(position),
                     getRightChildPosition(position));
-            while (values[position].compareTo(values[childMaxPosition])<0 &&
-                    position < heapSize && childMaxPosition!=0){
+            while (values[position].compareTo(values[childMinPosition]) > 0 &&
+                    position < heapSize && childMinPosition != 0){
                 T temp = values[position];
-                values[position] = values[childMaxPosition];
-                values[childMaxPosition] = temp;
-                position = childMaxPosition;
-                childMaxPosition = maxPosition(getLeftChildPosition(position),
+                values[position] = values[childMinPosition];
+                values[childMinPosition] = temp;
+                position = childMinPosition;
+                childMinPosition = minPosition(getLeftChildPosition(position),
                         getRightChildPosition(position));
             }
         }
         heapSize--;
         return returnValue;
     }
-
+    private int minPosition(int position1, int position2){
+        if (position1 > heapSize && position2 > heapSize){
+            return 0;
+        }
+        if (position1 <= heapSize && position2 > heapSize){
+            return position1;
+        }
+        if (position1 > heapSize && position2 <= heapSize){
+            return position2;
+        }
+        if (values[position1].compareTo(values[position2]) < 0){
+            return position1;
+        } else{
+            return position2;
+        }
+    }
     @Override
     public int size() {
         return heapSize;
     }
 
+    @Override
+    public boolean isEmpty() {
+        return heapSize == 0;
+    }
 }

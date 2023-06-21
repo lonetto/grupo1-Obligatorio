@@ -1,6 +1,8 @@
 package uy.edu.um.prog2.adt.tads.Hash;
 
+import entities.User;
 import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
 
 public interface MyHash<K,V> {
     void put(K key, V value);

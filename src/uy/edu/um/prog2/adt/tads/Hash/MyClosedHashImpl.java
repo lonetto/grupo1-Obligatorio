@@ -2,10 +2,10 @@ package uy.edu.um.prog2.adt.tads.Hash;
 
 import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
 import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayListImpl;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
 
 public class MyClosedHashImpl <K, V> implements MyHash<K, V>{
-
-
     private int tableSize; //espacio total del array
     private int currentSize;
     private int occupiedSize; //espacio ocupado en el array (como el current pero tambien cuenta los deleted).

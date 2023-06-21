@@ -2,13 +2,18 @@ import entities.HashTag;
 import entities.SistemaCentral;
 import entities.Tweet;
 import entities.User;
+import uy.edu.um.prog2.adt.tads.Heap.MyHeap;
+import uy.edu.um.prog2.adt.tads.Heap.MyHeapImpl;
+import uy.edu.um.prog2.adt.tads.Heap.exceptions.EmptyHeapException;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
 import com.opencsv.exceptions.CsvValidationException;;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -91,32 +96,29 @@ public class Main {
         //
 
     }
+    public static void report2(SistemaCentral manager) throws EmptyHeapException {
+        MyHeap<User> topUsers = new MyHeapImpl<>(15);
+        MyLinkedList<User> users = new MyLinkedListImpl<>(); // Crea una lista de usuarios.
 
+        // Agrega los usuarios a la lista.
+        MyArrayList<String> keys = manager.getHashUsers().getListaDeKeys();
+        for (int i = 0; i < keys.size(); i++) {
+            User user = manager.getHashUsers().get(keys.get(i));
+            users.add(user);
+        }
 
-
-
-    // O(n^2),mal
-    public MyLinkedList report2 (SistemaCentral manager) {
-        MyLinkedList<User> topUsers = new MyLinkedListImpl<>();
-        int totalKeys = manager.getHashUsers().size();
-        for (int i = 0; i < totalKeys; i++) {
-            User user = manager.getHashUsers().get(manager.getHashUsers().getListaDeKeys().get(i));
-            int countTweets = user.getCountTweets();
-            int pos = topUsers.size();
-            for (int j = 0; j < topUsers.size(); j++) {
-                if (countTweets > topUsers.get(j).getCountTweets()) {
-                    pos = j;
-                    break;
-                }
-            }
-            if (pos < 15) {
-                topUsers.addpos(pos, user);
-                if (topUsers.size() > 15) {
-                    topUsers.remove(15);
-                }
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            topUsers.insert(user);
+            if (topUsers.size() > 15) {
+                topUsers.delete(); // Elimina el usuario con la menor cantidad de tweets.
             }
         }
-        return topUsers;
+
+        while (!topUsers.isEmpty()) {
+            User user = topUsers.delete();
+            System.out.println("Usuario: " + user.getName() + " Tweets: " + user.getTweets().size());
+        }
     }
 
 
