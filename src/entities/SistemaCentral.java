@@ -1,9 +1,8 @@
 package entities;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Calendar;
 import java.util.Scanner;
-import com.opencsv.CSVParser;
+
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.RFC4180Parser;
@@ -12,16 +11,9 @@ import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
 import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayListImpl;
 import uy.edu.um.prog2.adt.tads.Hash.MyClosedHashImpl;
 import uy.edu.um.prog2.adt.tads.Hash.MyHash;
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvValidationException;
-import com.opencsv.RFC4180Parser;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
-
-import java.io.FileReader;
-import java.io.IOException;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -175,7 +167,7 @@ public class SistemaCentral {
     //Cambie lo de idUser e hice que lo retornara
     public User agregarUser(String user_name, String user_location, String user_description, Date user_created, double user_followers, double user_friends, double user_favourites, boolean user_verified) {
         User user1 = existeUser(user_name);
-        if(user1 != null){
+        if(user1 == null){
             user1 = new User(idUsers, user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
             hashUsers.put(user_name, user1);
             idUsers++;
@@ -187,18 +179,17 @@ public class SistemaCentral {
         return (hashUsers.get(user_name));
     }
 
-    public Tweet agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet, User user) {
-        Tweet tweet = existeTweet(tweet_id);
-        if (tweet != null){
+    public void agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet, User user) {
+        Tweet tweet;
+        if (!existeTweet(tweet_id)) {
             tweet = new Tweet(tweet_id, date, content, source, is_retweet, user);
             hashTweets.put(tweet_id, tweet);
             user.addTweet(tweet);
         }
-        return tweet;
     }
 
-    public Tweet existeTweet(long tweet_id){
-        return hashTweets.get(tweet_id);
+    public boolean existeTweet(long tweet_id){
+        return (hashTweets.get(tweet_id)!= null);
     }
 
     public void agregarHashtag(String text){
