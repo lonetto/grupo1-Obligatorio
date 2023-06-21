@@ -117,7 +117,7 @@ public class Main {
 
         while (!topUsers.isEmpty()) {
             User user = topUsers.delete();
-            System.out.println("Usuario: " + user.getName() + " Tweets: " + user.getTweets().size());
+            System.out.println("Usuario: " + user.getName() + " Tweets: " + user.getTweets().size() + " Verificado: " + (user.isVerified() ? "Si" : "No"));
         }
     }
 
@@ -172,11 +172,16 @@ public class Main {
     }
 
 
-    public static void report6() {
-
+    public static void report6(SistemaCentral manager, String frase) {
+        int count = 0;
+        for (int i = 0; i < manager.getHashHashtag().size(); i++) {
+            HashTag hashtag = manager.getHashHashtag().get(manager.getHashHashtag().getListaDeKeys().get(i));
+            for (int j = 0; j < hashtag.getTweets().size(); j++) {
+                if (hashtag.getTweets().get(j).getContent().toUpperCase().contains(frase.toUpperCase())) {
+                    count++;
+                }
+            }
+        }
+        System.out.println("La cantidad de tweets con la frase " + frase + " es: " + count);
     }
-
-
-
-
 }
