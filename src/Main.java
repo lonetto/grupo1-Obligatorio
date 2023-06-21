@@ -111,14 +111,13 @@ public class Main {
             users.add(user);
         }
 
-        for (int i = 0; i < users.size(); i++) {
+        for (int i = 0; i < Math.min(users.size(), 15); i++) {
             User user = users.get(i);
             topUsers.insert(user);
             if (topUsers.size() > 15) {
                 topUsers.delete(); // Elimina el usuario con la menor cantidad de tweets.
             }
         }
-
         while (!topUsers.isEmpty()) {
             User user = topUsers.delete();
             System.out.println("Usuario: " + user.getName() + " Tweets: " + user.getTweets().size() + " Verificado: " + (user.isVerified() ? "Si" : "No"));
@@ -174,18 +173,14 @@ public class Main {
         long fin = System.currentTimeMillis();
         System.out.println(fin-inicio + "milisegundos");
     }
-
-
     public static void report6(SistemaCentral manager, String frase) {
         int count = 0;
-        for (int i = 0; i < manager.getHashHashtag().size(); i++) {
-            HashTag hashtag = manager.getHashHashtag().get(manager.getHashHashtag().getListaDeKeys().get(i));
-            for (int j = 0; j < hashtag.getTweets().size(); j++) {
-                if (hashtag.getTweets().get(j).getContent().toUpperCase().contains(frase.toUpperCase())) {
-                    count++;
-                }
+        for (int i = 0; i < manager.getHashTweets().size(); i++) {
+            Tweet tweet = manager.getHashTweets().get(manager.getHashTweets().getListaDeKeys().get(i));
+            if (tweet.getContent().toUpperCase().contains(frase.toUpperCase())) {
+                count++;
             }
         }
-        System.out.println("La cantidad de tweets con la frase " + frase + " es: " + count);
+        System.out.println("La cantidad de tweets con la frase \"" + frase + "\" es: " + count);
     }
 }
