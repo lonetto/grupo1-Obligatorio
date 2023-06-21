@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static void main(String[] args) throws CsvValidationException,IOException, ParseException {
+    public static void main(String[] args) throws CsvValidationException, IOException, ParseException, EmptyHeapException {
         long inicio = System.currentTimeMillis();
         System.out.println("CARGANDO DATOS...");
         SistemaCentral manager = new SistemaCentral();
@@ -32,7 +32,7 @@ public class Main {
     }
 
 
-    public static void showMenu(SistemaCentral manager) throws ParseException {
+    public static void showMenu(SistemaCentral manager) throws ParseException, EmptyHeapException {
         boolean mostrarMenu = true;
         int numeroIngresado;
         while(mostrarMenu) {
@@ -56,7 +56,7 @@ public class Main {
 
             }
             else if (numeroIngresado == 2){
-
+                report2(manager);
             }
             else if (numeroIngresado == 3){
 
@@ -68,7 +68,11 @@ public class Main {
                 report5(manager);
             }
             else if (numeroIngresado == 6){
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Ingrese la frase o palabra que desea buscar:");
+                String frase = scanner.nextLine();
 
+                report6(manager, frase);
             }
             else if (numeroIngresado == 7){
                 mostrarMenu = false;
