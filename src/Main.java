@@ -60,7 +60,14 @@ public class Main {
                 report2(manager);
             }
             else if (numeroIngresado == 3){
-
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Por favor, ingresa la fecha en el formato YYYY-MM-DD");
+                String inputDate = scanner.nextLine();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = null;
+                date = formatter.parse(inputDate);
+                int hashtagdistintos = report3(date, manager);
+                System.out.println("El dia " + date + "se han tweeteado"+ hashtagdistintos+ "hashtags distintos");
             }
             else if (numeroIngresado == 4){
                 Scanner scanner = new Scanner(System.in);
