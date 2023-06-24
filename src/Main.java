@@ -23,7 +23,7 @@ public class Main {
         long inicio = System.currentTimeMillis();
         System.out.println("CARGANDO DATOS...");
         SistemaCentral manager = new SistemaCentral();
-        manager.leerCSV("sources/f1_dataset_test.csv");
+        manager.leerCSV("sources/f1_dataset.csv");
         System.out.println("DATOS CARGADOS CORRECTAMENTE");
         manager.cargarPilotos();
         long fin = System.currentTimeMillis();
@@ -101,27 +101,15 @@ public class Main {
 
     }
     public static void report2(SistemaCentral manager) throws EmptyHeapException {
-        MyHeap<User> topUsers = new MyHeapImpl<>(15);
-        MyLinkedList<User> users = new MyLinkedListImpl<>(); // Crea una lista de usuarios.
-
-        // Agrega los usuarios a la lista.
-        MyArrayList<String> keys = manager.getHashUsers().getListaDeKeys();
-        for (int i = 0; i < keys.size(); i++) {
-            User user = manager.getHashUsers().get(keys.get(i));
-            users.add(user);
+        long inicio = System.currentTimeMillis();
+        MyArrayList<User> x = manager.lista15UsuariosConMasTweets();
+        for(int i = 0; i < x.size(); i++){
+            System.out.println("En el puesto numero " + i+1 + ":");
+            System.out.println("-->Usuario: " + x.get(i).getName());
+            System.out.println("-->Tweets: " + x.get(i).tweets.size());
         }
-
-        for (int i = 0; i < Math.min(users.size(), 15); i++) {
-            User user = users.get(i);
-            topUsers.insert(user);
-            if (topUsers.size() > 15) {
-                topUsers.delete(); // Elimina el usuario con la menor cantidad de tweets.
-            }
-        }
-        while (!topUsers.isEmpty()) {
-            User user = topUsers.delete();
-            System.out.println("Usuario: " + user.getName() + " Tweets: " + user.getTweets().size() + " Verificado: " + (user.isVerified() ? "Si" : "No"));
-        }
+        long fin = System.currentTimeMillis();
+        System.out.println(fin-inicio + "milisegundos");
     }
 
 
@@ -164,15 +152,18 @@ public class Main {
 
     public static void report5 (SistemaCentral manager) {
         long inicio = System.currentTimeMillis();
-        MyLinkedList<User> x = manager.lista7UsuariosConMasFavoritos();
+        MyArrayList<User> x = manager.lista7UsuariosConMasFavoritos();
         for(int i = 0; i < x.size(); i++){
-            System.out.println(i);
+            System.out.println("En el puesto numero " + i+1 + ":");
             System.out.println("-->Usuario: " + x.get(i).getName());
             System.out.println("-->Favoritos: " + x.get(i).getFavourites());
         }
         long fin = System.currentTimeMillis();
         System.out.println(fin-inicio + "milisegundos");
     }
+
+
+
     public static void report6(SistemaCentral manager, String frase) {
         int count = 0;
         for (int i = 0; i < manager.getHashTweets().size(); i++) {

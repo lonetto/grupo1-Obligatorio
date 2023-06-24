@@ -52,7 +52,7 @@ public class User implements Comparable<User> {
         return tweets;
     }
     public int getCountTweets() {
-        return countTweets;
+        return getTweets().size();
     }
     public void setCountTweets(int countTweets) {
         this.countTweets = countTweets;
@@ -114,4 +114,6 @@ public class User implements Comparable<User> {
     public int compareTo(User anotherUser) {
         return Integer.compare(this.tweets.size(), anotherUser.tweets.size());
     }
+
+
 }

@@ -1,5 +1,8 @@
 package uy.edu.um.prog2.adt.tads.ArrayList;
 
+import java.util.Comparator;
+
+
 public class MyArrayListImpl<T> implements MyArrayList<T> {
 
 
@@ -77,6 +80,59 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
     @Override
     public int size() {
         return this.size;
+    }
+
+    @Override
+    public void sort(Comparator<T> reversed) {
+        mergeSort(list, reversed, 0, size - 1);
+    }
+
+    private void mergeSort(T[] array, Comparator<T> comparator, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+
+            mergeSort(array, comparator, left, mid);
+            mergeSort(array, comparator, mid + 1, right);
+
+            merge(array, comparator, left, mid, right);
+        }
+    }
+
+    private void merge(T[] array, Comparator<T> comparator, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        T[] L = (T[]) new Object[n1];
+        T[] R = (T[]) new Object[n2];
+
+        System.arraycopy(array, left, L, 0, n1);
+        System.arraycopy(array, mid + 1, R, 0, n2);
+
+        int i = 0, j = 0;
+
+        int k = left;
+        while (i < n1 && j < n2) {
+            if (comparator.compare(L[i], R[j]) <= 0) {
+                array[k] = L[i];
+                i++;
+            } else {
+                array[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1) {
+            array[k] = L[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+            array[k] = R[j];
+            j++;
+            k++;
+        }
     }
 
 

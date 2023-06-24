@@ -1,6 +1,7 @@
 package entities;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Comparator;
 import java.util.Scanner;
 
 import com.opencsv.CSVParserBuilder;
@@ -223,35 +224,78 @@ public class SistemaCentral {
         return tweetsFiltrados;
     }
 
-    //Report 5
-    public MyLinkedList<User> lista7UsuariosConMasFavoritos(){
-        MyLinkedList<User> list1 = new MyLinkedListImpl<>();
 
-        for(int i = 0; i < hashUsers.size(); i++){
+
+    //Report 2
+    public MyArrayList<User> lista15UsuariosConMasTweets() {
+
+        MyArrayList<User> usuariosTop15Tweets = new MyArrayListImpl<>(15);
+
+        for(int i = 0; i < hashUsers.size(); i++) {
+            //Busco la cantidad de tweets de cada usuario en la lista hashUsers
+            String userKey = hashUsers.keyListaKeys(i);
+            User user = hashUsers.get(userKey);
+            int cantidadTweets = user.tweets.size();
+
+            //Si la lista esta vacia
+            if(usuariosTop15Tweets.size() == 0) {
+                usuariosTop15Tweets.add(user);
+            } else if (usuariosTop15Tweets.size() < 15) {
+                usuariosTop15Tweets.add(user);
+                usuariosTop15Tweets.sort(Comparator.comparing(User::getCountTweets).reversed());
+            } else {
+                User minTweetsUser = usuariosTop15Tweets.get(0); // comienza asumiendo que el primer usuario tiene los tweets mínimos
+                for (int k = 1; k < usuariosTop15Tweets.size(); k++) {
+                    User currentUser = usuariosTop15Tweets.get(k); // obtén el usuario actual
+                    if (currentUser.tweets.size() < minTweetsUser.tweets.size()) {
+                        minTweetsUser = currentUser;
+                    }
+                }
+                if (cantidadTweets > minTweetsUser.tweets.size()) { // Solo si el nuevo usuario tiene más tweets que el de menos en la lista actual
+                    usuariosTop15Tweets.delete(minTweetsUser);
+                    usuariosTop15Tweets.add(user);
+                    usuariosTop15Tweets.sort(Comparator.comparing(User::getCountTweets).reversed()); // Ordena la lista en orden descendente de tweets
+                }
+            }
+        }
+        return usuariosTop15Tweets;
+    }
+
+
+
+    //Report 5
+    public MyArrayList<User> lista7UsuariosConMasFavoritos(){
+
+        MyArrayList<User> usuariosTop7Favoritos = new MyArrayListImpl<>(7);
+
+        for (int i = 0; i < hashUsers.size(); i++) {
+            //Busco los favoritos de cada usuario en la lista hashUsers
             String userKey = hashUsers.keyListaKeys(i);
             User user = hashUsers.get(userKey);
             double favoritos = user.getFavourites();
 
-            // Encuentra la posición para insertar al usuario.
-            int pos = list1.size();
-            for (int j = 0; j < list1.size(); j++) {
-                if (favoritos > list1.get(j).getFavourites()) {
-                    pos = j;
-                    break;
+            //Si la lista esta vacia
+            if (usuariosTop7Favoritos.size() == 0) {
+                usuariosTop7Favoritos.add(user);
+            } else if (usuariosTop7Favoritos.size() < 7) {
+                usuariosTop7Favoritos.add(user);
+                usuariosTop7Favoritos.sort(Comparator.comparing(User::getFavourites).reversed()); // Ordena la lista en orden descendente de favoritos
+            } else {
+                User minFavUser = usuariosTop7Favoritos.get(0); // comienza asumiendo que el primer usuario tiene los favoritos mínimos
+                for (int k = 1; k < usuariosTop7Favoritos.size(); k++) {
+                    User currentUser = usuariosTop7Favoritos.get(k); // obtén el usuario actual
+                    if (currentUser.getFavourites() < minFavUser.getFavourites()) {
+                        minFavUser = currentUser;
+                    }
                 }
-            }
-
-            // Si la posición es menor a 7, inserta al usuario.
-            if (pos < 7) {
-                list1.addpos(pos, user);
-                // Si el tamaño de la lista es mayor a 7, elimina el último usuario.
-                if (list1.size() > 7) {
-                    list1.remove(7);
+                if (favoritos > minFavUser.getFavourites()) { // Solo si el nuevo usuario tiene más favoritos que el de menos en la lista actual
+                    usuariosTop7Favoritos.delete(minFavUser);
+                    usuariosTop7Favoritos.add(user);
+                    usuariosTop7Favoritos.sort(Comparator.comparing(User::getFavourites).reversed()); // Ordena la lista en orden descendente de favoritos
                 }
             }
         }
-
-        return list1;
+        return usuariosTop7Favoritos;
     }
 
 
