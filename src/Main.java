@@ -38,6 +38,9 @@ public class Main {
         int numeroIngresado;
         while(mostrarMenu) {
             Scanner sc = new Scanner(System.in);
+            System.out.println("");
+            System.out.println("Binvenidos a la Base de Datos de tweets sobre Formula 1");
+            System.out.println("");
             System.out.println("1) Para listar los 10 pilotos activos en la temporada 2023 mas mencionados en los tweets en un mes, presione 1");
             System.out.println("2) Para listar los 15 usuarios con mas tweets, presione 2");
             System.out.println("3) Para ver la cantidad de hashtags distintos para un dia dado, presione 3");
@@ -46,6 +49,7 @@ public class Main {
             System.out.println("6) Para ver la cantidad de tweets con una palabra o frase específicos, presione 6");
             System.out.println("7) Para cerrar el programa, presione 7");
             System.out.println("");
+            System.out.println("Ingrese la opcion deseada: ");
 
             try {
                 numeroIngresado = Integer.parseInt(sc.nextLine());
@@ -66,8 +70,9 @@ public class Main {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = null;
                 date = formatter.parse(inputDate);
-                int hashtagdistintos = report3(date, manager);
-                System.out.println("El dia " + date + "se han tweeteado"+ hashtagdistintos+ "hashtags distintos");
+                int count = report3(date, manager);
+                System.out.println("La cantidad de hashtags distintos para la fecha ingresada es: " + count);
+
             }
             else if (numeroIngresado == 4){
                 Scanner scanner = new Scanner(System.in);

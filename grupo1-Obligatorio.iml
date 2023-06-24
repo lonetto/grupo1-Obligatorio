@@ -138,7 +138,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/UM/opencsv-5.7.1.jar!/" />
@@ -172,7 +172,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="commons-lang3-3.12.0" level="project" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../opencsv-5.7.1 (2).jar!/" />
@@ -194,6 +194,24 @@
           <root url="jar://$MODULE_DIR$/../../commons-lang3-3.12.0/commons-lang3-3.12.0-sources.jar!/" />
           <root url="jar://$MODULE_DIR$/../../commons-lang3-3.12.0/commons-lang3-3.12.0-test-sources.jar!/" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../opencsv-5.7.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../commons-lang3-3.12.0-tests.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
