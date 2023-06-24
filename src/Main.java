@@ -11,6 +11,7 @@ import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
 import com.opencsv.exceptions.CsvValidationException;;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Map;
@@ -62,7 +63,14 @@ public class Main {
 
             }
             else if (numeroIngresado == 4){
-
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Por favor, ingresa la fecha en el formato YYYY-MM-DD");
+                String inputDate = scanner.nextLine();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = null;
+                date = formatter.parse(inputDate);
+                String mostUsedHashtag = report4(date, manager);
+                System.out.println("El hashtag más usado para la fecha ingresada es: " + mostUsedHashtag);
             }
             else if (numeroIngresado == 5){
                 report5(manager);
@@ -107,13 +115,14 @@ public class Main {
             System.out.println("En el puesto numero " + i+1 + ":");
             System.out.println("-->Usuario: " + x.get(i).getName());
             System.out.println("-->Tweets: " + x.get(i).tweets.size());
+            System.out.println("-->Verificado: " + x.get(i).isVerified());
         }
         long fin = System.currentTimeMillis();
         System.out.println(fin-inicio + "milisegundos");
     }
 
 
-    public int report3 (Date date, SistemaCentral manager) {
+    public static int report3(Date date, SistemaCentral manager) {
         int count = 0;
         for (int i = 0; i < manager.getHashHashtag().size(); i++) {
             HashTag hashtag = manager.getHashHashtag().get(manager.getHashHashtag().getListaDeKeys().get(i));
@@ -128,7 +137,7 @@ public class Main {
     }
 
 
-    public String report4(Date date, SistemaCentral manager) {
+    public static String report4(Date date, SistemaCentral manager) {
         int count = 0;
         int maxCount = 0;
         HashTag mostUsed = null;
@@ -146,7 +155,13 @@ public class Main {
                 }
             }
         }
-        return mostUsed.getText();
+
+        // Asegurarse de que mostUsed no es null antes de intentar acceder a su método getText
+        if (mostUsed == null) {
+            return "No se encontró un hashtag más usado para la fecha dada";
+        } else {
+            return mostUsed.getText();
+        }
     }
 
 

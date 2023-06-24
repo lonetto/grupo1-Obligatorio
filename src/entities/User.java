@@ -46,7 +46,7 @@ public class User implements Comparable<User> {
     }*/
     public void addTweet(Tweet tweet) {
         this.tweets.add(tweet);
-        this.countTweets++;
+        this.countTweets = this.tweets.size();
     }
     public MyLinkedList<Tweet> getTweets() {
         return tweets;
@@ -111,8 +111,8 @@ public class User implements Comparable<User> {
     public void setVerified(boolean verified) {
         this.verified = verified;
     }
-    public int compareTo(User anotherUser) {
-        return Integer.compare(this.tweets.size(), anotherUser.tweets.size());
+    public int compareTo(User other) {
+        return Integer.compare(this.getTweets().size(), other.getTweets().size());
     }
 
 

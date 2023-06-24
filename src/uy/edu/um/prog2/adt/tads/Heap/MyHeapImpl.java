@@ -41,7 +41,6 @@ public class MyHeapImpl <T extends Comparable<T>> implements MyHeap<T>{
         }
     }
 
-
     @Override
     public void insert(T value) {
         int position = heapSize;
@@ -67,21 +66,19 @@ public class MyHeapImpl <T extends Comparable<T>> implements MyHeap<T>{
         } else {
             values[0] = values[heapSize - 1];
             int position = 0;
-            int childMinPosition = minPosition(getLeftChildPosition(position),
-                    getRightChildPosition(position));
-            while (values[position].compareTo(values[childMinPosition]) > 0 &&
-                    position < heapSize && childMinPosition != 0){
+            int childMinPosition = minPosition(getLeftChildPosition(position), getRightChildPosition(position));
+            while (values[position].compareTo(values[childMinPosition]) > 0 && position < heapSize && childMinPosition != 0){
                 T temp = values[position];
                 values[position] = values[childMinPosition];
                 values[childMinPosition] = temp;
                 position = childMinPosition;
-                childMinPosition = minPosition(getLeftChildPosition(position),
-                        getRightChildPosition(position));
+                childMinPosition = minPosition(getLeftChildPosition(position), getRightChildPosition(position));
             }
         }
         heapSize--;
         return returnValue;
     }
+
     private int minPosition(int position1, int position2){
         if (position1 > heapSize && position2 > heapSize){
             return 0;
