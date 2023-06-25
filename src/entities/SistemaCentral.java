@@ -200,7 +200,6 @@ public class SistemaCentral {
     //Report 1
     public MyArrayList<Driver> obtenerPilotos10MasMencionadosEnTweetsPorMesYAño(int mes, int año) {
 
-
         // Restablecer las menciones para cada piloto antes de comenzar el conteo
         for(int l = 0; l < hashDrivers.size(); l++ ) {
             Long driverKey = hashDrivers.keyListaKeys(l);
@@ -208,10 +207,10 @@ public class SistemaCentral {
             driver.resetMencionesEnRangoFecha();
         }
 
-
-
         MyArrayList<Driver> pilotosMasMencionados = new MyArrayListImpl<>(21);
 
+        //String fechaString= año + "-" + mes + "-01";
+        //System.out.println(fechaString);
 
         // Crear una instancia de Calendar
         Calendar calendar = Calendar.getInstance();

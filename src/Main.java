@@ -138,10 +138,10 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Por favor, ingresa la fecha en el formato YYYY-MM-DD");
             String inputDate = scanner.nextLine();
-        int x = manager.cantHashtagsDistintosParaUnDia(inputDate);
+        //int x = manager.cantHashtagsDistintosParaUnDia(inputDate);
 
-        System.out.println("La cantidad de hashtags distintos para este dia es de: " + x);
-        return x;
+        //System.out.println("La cantidad de hashtags distintos para este dia es de: " + x);
+        return 0;
 
     }
 
