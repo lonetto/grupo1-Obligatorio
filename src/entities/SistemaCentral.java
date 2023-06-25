@@ -149,7 +149,7 @@ public class SistemaCentral {
             User user = agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
             agregarTweet(tweet_id, date, text, source, is_retweet, user);
             agregarHashtag(hashtag);
-            agregarTweetsEnHashtag();
+            //agregarTweetsEnHashtag();
         } catch (Exception e){
             //Algunas lineas estan mal redactadas, por lo que no se pueden parsear asi que se ignoran ya que son muy pocas
         }
