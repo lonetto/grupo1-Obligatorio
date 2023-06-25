@@ -121,7 +121,7 @@ public class Main {
         }
 
         MyArrayList<Driver> x = manager.obtenerPilotos10MasMencionadosEnTweetsPorMesYAño(mes, año);
-        for(int i = 0; i < x.size(); i++){
+        for(int i = 0; i < (x.size() - 10); i++){
             System.out.println("En el puesto numero " + (i+1) + ":");
             System.out.println("-->Piloto: " + x.get(i).getName());
             System.out.println("-->Menciones en tweets: " + x.get(i).getMencionesEnRangoFecha());
