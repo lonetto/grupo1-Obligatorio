@@ -24,7 +24,7 @@ public class Main {
         long inicio = System.currentTimeMillis();
         System.out.println("CARGANDO DATOS...");
         SistemaCentral manager = new SistemaCentral();
-        manager.leerCSV("sources/f1_dataset_test.csv");
+        manager.leerCSV("sources/f1_dataset.csv");
         System.out.println("DATOS CARGADOS CORRECTAMENTE");
         manager.cargarPilotos();
         long fin = System.currentTimeMillis();

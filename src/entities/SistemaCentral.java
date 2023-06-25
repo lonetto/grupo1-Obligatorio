@@ -37,7 +37,6 @@ public class SistemaCentral {
 
 
     public void leerCSV(String path) throws CsvValidationException, IOException, OutOfMemoryError {
-
         String[] line;
         int i= 0; RFC4180Parser rfc4180Parser = new RFC4180Parser();
         CSVParserBuilder csvParserBuilder = new CSVParserBuilder();
@@ -50,37 +49,9 @@ public class SistemaCentral {
                 .build();
 
         while ((line = csvReader.readNext()) != null) {
-            //String[] line = csvsample;
-            //i=i+1;
-            //System.out.println(i);
-           // if(line.length != 14){
-             //   line = procesarLine(line);
-               // System.out.println(line);
-            //}
             agregarTodo(line);
-
-
         }
     }
-
-    /*
-    private String[] procesarLine(String[] line) {
-        String [] nuevalinea = new String[14];
-        int i=0;
-        for (String item : line) {
-            String[] splitItem;
-            if(i==10 || i == 3 || item.contains("[")){splitItem = new String[]{item};}
-            else {  splitItem = item.split("\\,");}
-
-            for (String item2 : splitItem) {
-                nuevalinea[i]=item2;
-                i=i+1;
-            }
-        }
-        return  nuevalinea;
-    }
-
-     */
 
     public void cargarPilotos() {
         try {
@@ -99,73 +70,44 @@ public class SistemaCentral {
             System.out.println("Ocurrió un error al leer el archivo.");
             e.printStackTrace();
         }
-
-        /*
-        // Imprimir los nombres de los pilotos para verificar
-        for (int i = 0; i < drivers.size(); i++) {
-            String pilot = drivers.get(i);
-            System.out.println(pilot);
-        }
-
-         */
     }
 
 
     public void agregarTodo(String[] line) {
-        int noVacios = 0;
-        for(int i=0; i<14; i++){
-            if(!line[i].isEmpty()){
-                noVacios++;
-            }
-        }
-        if (noVacios == 14){
-            try {
-
-                long tweet_id = Long.parseLong(line[0]);
-                String user_name = line[1];
-                String user_location = line[2];
-                String user_description = line[3];
-                //Las siguientes 3 lineas son para parsear las fechas desde tipo String a tipo Date
-                String dateString = line[4];
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date user_created = format.parse(dateString);
-                //long user_followers = Long.parseLong(line[5]);
-                double user_followers = Double.parseDouble(line[5]);
-                //long user_friends = Long.parseLong(line[6]);
-                double user_friends = Double.parseDouble(line[6]);
-                //long user_favourites = Long.parseLong(line[7]);
-                double user_favourites = Double.parseDouble(line[7]);
-                boolean user_verified = Boolean.parseBoolean(line[8]);
-                String dateString1 = line[9];
-                Date date = format.parse(dateString1);
-                String text = line[10];
-                //Las siguientes 4 lineas son para parsear los hashtags de Array a tipo string por separado
-                String hashtag = line[11];
+        try {
+            long tweet_id = Long.parseLong(line[0]);
+            String user_name = line[1];
+            String user_location = line[2];
+            String user_description = line[3];
+            //Las siguientes 3 lineas son para parsear las fechas desde tipo String a tipo Date
+            String dateString = line[4];
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date user_created = format.parse(dateString);
+            double user_followers = Double.parseDouble(line[5]);
+            double user_friends = Double.parseDouble(line[6]);
+            double user_favourites = Double.parseDouble(line[7]);
+            boolean user_verified = Boolean.parseBoolean(line[8]);
+            String dateString1 = line[9];
+            Date date = format.parse(dateString1);
+            String text = line[10];
+            String hashtag = line[11];
+            String source = line[12];
+            boolean is_retweet = Boolean.parseBoolean(line[13]);
+            //Agregar las funciones
+            User user = agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
+            Tweet tweet = agregarTweet(tweet_id, date, text, source, is_retweet, user);
+            if (!hashtag.isEmpty()){
                 hashtag = hashtag.substring(1, hashtag.length() - 1);
                 hashtag = hashtag.replace("'", " ");
                 String[] hashtags = hashtag.split(",");
-                //for (String element : hashtags) { //hacemos un for each
-                //    agregarHashtag(element);                }
-                String source = line[12];
-                boolean is_retweet = Boolean.parseBoolean(line[13]);
-
-                //Agregar las funciones
-                User user = agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
-                Tweet tweet = agregarTweet(tweet_id, date, text, source, is_retweet, user);
                 for (String element : hashtags) { //hacemos un for each
                     agregarHashtag(element, tweet);
                 }
-
-
             }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-                System.exit(1);
-                //No agregar nada
-            }
-
+        } catch (Exception e){
+            // Hay cieras lineas, como la 199943, que estan mal redactadas, por lo que se ignoran ya que son muy pocas.
+            // Tambien, estas fechas no se pueden parsear, por lo que se ignoran.
         }
-
     }
 
     //Cambie lo de idUser e hice que lo retornara
