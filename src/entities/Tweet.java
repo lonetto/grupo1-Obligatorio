@@ -1,5 +1,7 @@
 package entities;
 
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+
 import java.util.Date;
 
 public class Tweet {
@@ -10,6 +12,7 @@ public class Tweet {
     private boolean isRetweet;
     private Date date;
     private User user;
+
 
 
     public Tweet(long id, Date date, String content, String source, boolean isRetweet, User user) {

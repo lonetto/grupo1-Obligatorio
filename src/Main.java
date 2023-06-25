@@ -62,15 +62,7 @@ public class Main {
                 report2(manager);
             }
             else if (numeroIngresado == 3){
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Por favor, ingresa la fecha en el formato YYYY-MM-DD");
-                String inputDate = scanner.nextLine();
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = null;
-                date = formatter.parse(inputDate);
-                int count = report3(date, manager);
-                System.out.println("La cantidad de hashtags distintos para la fecha ingresada es: " + count);
-
+               report3(manager);
             }
             else if (numeroIngresado == 4){
                 Scanner scanner = new Scanner(System.in);
@@ -142,22 +134,14 @@ public class Main {
         System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
     }
 
-    public static int report3(Date date, SistemaCentral manager) {
-        long inicio = System.currentTimeMillis();
-        int count = 0;
-        for (int i = 0; i < manager.getHashHashtag().size(); i++) {
-            HashTag hashtag = manager.getHashHashtag().get(manager.getHashHashtag().getListaDeKeys().get(i));
-            for (int j = 0; j < hashtag.getTweets().size(); j++) {
-                if (hashtag.getTweets().get(j).checkDate(date)) {
-                    count++;
-                    break;
-                }
-            }
-        }
-        long fin = System.currentTimeMillis();
-        System.out.println("");
-        System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
-        return count;
+        public static int report3( SistemaCentral manager) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Por favor, ingresa la fecha en el formato YYYY-MM-DD");
+            String inputDate = scanner.nextLine();
+        int x = manager.cantHashtagsDistintosParaUnDia(inputDate);
+
+        System.out.println("La cantidad de hashtags distintos para este dia es de: " + x);
+        return x;
 
     }
 

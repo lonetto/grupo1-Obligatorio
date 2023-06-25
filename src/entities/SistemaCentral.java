@@ -1,6 +1,7 @@
 package entities;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -31,7 +32,7 @@ public class SistemaCentral {
 
     private MyHash<String, User> hashUsers = new MyClosedHashImpl<>(20000);
     private MyHash<Long, Tweet> hashTweets = new MyClosedHashImpl<>(200000);
-    private MyHash<Long, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
+    private MyHash<String, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
     private MyHash<Long, Driver> hashDrivers = new MyClosedHashImpl<>(21);
     private long idUsers = 1;
     private long idHashtag = 1;
@@ -148,6 +149,7 @@ public class SistemaCentral {
             User user = agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
             agregarTweet(tweet_id, date, text, source, is_retweet, user);
             agregarHashtag(hashtag);
+            agregarTweetsEnHashtag();
         } catch (Exception e){
             //Algunas lineas estan mal redactadas, por lo que no se pueden parsear asi que se ignoran ya que son muy pocas
         }
@@ -183,16 +185,16 @@ public class SistemaCentral {
     }
 
     public void agregarHashtag(String text){
-        HashTag hashtag1;
-        if(!existeHashtag(idHashtag)){
+        HashTag hashtag1 = existeHashtag(text);
+        if(hashtag1 == null){
             hashtag1 = new HashTag(idHashtag, text);
-            hashHashtag.put(idHashtag, hashtag1);
+            hashHashtag.put(text, hashtag1);
             idHashtag++;
         }
     }
 
-    public boolean existeHashtag(Long idHashtag){
-        return (hashHashtag.get(idHashtag)!= null);
+    public HashTag existeHashtag(String nombreHashtag){
+        return (hashHashtag.get(nombreHashtag));
     }
 
     //Report 1
@@ -294,6 +296,67 @@ public class SistemaCentral {
     }
 
 
+    public void agregarTweetsEnHashtag(){
+        /*
+        for(int k = 0; k< hashHashtag.size(); k++){
+            String hashtagKey = hashHashtag.keyListaKeys(k);
+            HashTag hashtag = hashHashtag.get(hashtagKey);
+            hashtag.
+        }
+
+         */
+
+
+        for(int j = 0; j< hashHashtag.size(); j++) {
+            String hashtagKey = hashHashtag.keyListaKeys(j);
+            HashTag hashtag = hashHashtag.get(hashtagKey);
+            String nombreHashtag = hashtag.getText();
+
+            for (int i = 0; i < hashTweets.size(); i++) {
+                Long tweetsKey = hashTweets.keyListaKeys(i);
+                Tweet tweet = hashTweets.get(tweetsKey);
+
+                if(tweet.getContent().contains(nombreHashtag)) {
+                    hashtag.addTweet(tweet);
+                }
+            }
+        }
+    }
+
+
+    //Report 3
+    public long cantHashtagsDistintosParaUnDia(String fecha) {
+        Date date = null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date = formatter.parse(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (date == null) {
+            // Si el parsing falló, retornamos 0 para evitar NullPointerException
+            return 0;
+        }
+
+        long inicio = System.currentTimeMillis();
+        int count = 0;
+        for (int i = 0; i < getHashHashtag().size(); i++) {
+            HashTag hashtag = getHashHashtag().get(getHashHashtag().getListaDeKeys().get(i));
+            for (int j = 0; j < hashtag.getTweets().size(); j++) {
+                if (hashtag.getTweets().get(j).checkDate(date)) {
+                    count++;
+                    break;
+                }
+            }
+        }
+        long fin = System.currentTimeMillis();
+        System.out.println("");
+        System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
+        return count;
+    }
+
+
 
     //Report 5
     public MyArrayList<User> lista7UsuariosConMasFavoritos(){
@@ -347,11 +410,11 @@ public class SistemaCentral {
         this.hashTweets = hashTweets;
     }
 
-    public MyHash<Long, HashTag> getHashHashtag() {
+    public MyHash<String, HashTag> getHashHashtag() {
         return hashHashtag;
     }
 
-    public void setHashHashtag(MyHash<Long, HashTag> hashHashtag) {
+    public void setHashHashtag(MyHash<String, HashTag> hashHashtag) {
         this.hashHashtag = hashHashtag;
     }
 
