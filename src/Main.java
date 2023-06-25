@@ -133,7 +133,6 @@ public class Main {
         System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
     }
 
-
     public static int report3(Date date, SistemaCentral manager) {
         long inicio = System.currentTimeMillis();
         int count = 0;
