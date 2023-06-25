@@ -16,6 +16,10 @@ public class HashTag {
         this.tweets =  new MyLinkedListImpl<>();
     }
 
+    public void addTweet(Tweet tweet) {
+        this.tweets.add(tweet);
+    }
+
     public long getId() {
         return id;
     }

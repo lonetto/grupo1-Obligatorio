@@ -24,11 +24,11 @@ public class Main {
         long inicio = System.currentTimeMillis();
         System.out.println("CARGANDO DATOS...");
         SistemaCentral manager = new SistemaCentral();
-        manager.leerCSV("sources/f1_dataset.csv");
+        manager.leerCSV("sources/f1_dataset_test.csv");
         System.out.println("DATOS CARGADOS CORRECTAMENTE");
         manager.cargarPilotos();
         long fin = System.currentTimeMillis();
-        System.out.println(fin-inicio + " milisegundos");
+        System.out.println("Duracion de carga: " + (fin-inicio) + " milisegundos");
         showMenu(manager);
     }
 
@@ -124,17 +124,18 @@ public class Main {
         long inicio = System.currentTimeMillis();
         MyArrayList<User> x = manager.lista15UsuariosConMasTweets();
         for(int i = 0; i < x.size(); i++){
-            System.out.println("En el puesto numero " + i+1 + ":");
+            System.out.println("En el puesto numero " + (i + 1) + ":");
             System.out.println("-->Usuario: " + x.get(i).getName());
             System.out.println("-->Tweets: " + x.get(i).tweets.size());
             System.out.println("-->Verificado: " + x.get(i).isVerified());
         }
         long fin = System.currentTimeMillis();
-        System.out.println(fin-inicio + "milisegundos");
+        System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
     }
 
 
     public static int report3(Date date, SistemaCentral manager) {
+        long inicio = System.currentTimeMillis();
         int count = 0;
         for (int i = 0; i < manager.getHashHashtag().size(); i++) {
             HashTag hashtag = manager.getHashHashtag().get(manager.getHashHashtag().getListaDeKeys().get(i));
@@ -145,17 +146,22 @@ public class Main {
                 }
             }
         }
+        long fin = System.currentTimeMillis();
+        System.out.println("");
+        System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
         return count;
+
     }
 
 
     public static String report4(Date date, SistemaCentral manager) {
+        long inicio = System.currentTimeMillis();
         int count = 0;
         int maxCount = 0;
         HashTag mostUsed = null;
         for (int i = 0; i < manager.getHashHashtag().size(); i++) {
             HashTag hashtag = manager.getHashHashtag().get(manager.getHashHashtag().getListaDeKeys().get(i));
-            if (hashtag.getText().toUpperCase() != "F1") {
+            if (hashtag.getText().strip().toUpperCase().contains("F1")) {
                 for (int j = 0; j < hashtag.getTweets().size(); j++) {
                     if (hashtag.getTweets().get(j).checkDate(date)) {
                         count++;
@@ -170,8 +176,13 @@ public class Main {
 
         // Asegurarse de que mostUsed no es null antes de intentar acceder a su método getText
         if (mostUsed == null) {
+            long fin = System.currentTimeMillis();
+            System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
             return "No se encontró un hashtag más usado para la fecha dada";
         } else {
+            long fin = System.currentTimeMillis();
+            System.out.println("");
+            System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
             return mostUsed.getText();
         }
     }
@@ -181,17 +192,19 @@ public class Main {
         long inicio = System.currentTimeMillis();
         MyArrayList<User> x = manager.lista7UsuariosConMasFavoritos();
         for(int i = 0; i < x.size(); i++){
-            System.out.println("En el puesto numero " + i+1 + ":");
+            System.out.println("En el puesto numero " + (i+1) + ":");
             System.out.println("-->Usuario: " + x.get(i).getName());
             System.out.println("-->Favoritos: " + x.get(i).getFavourites());
         }
         long fin = System.currentTimeMillis();
-        System.out.println(fin-inicio + "milisegundos");
+        System.out.println("");
+        System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
     }
 
 
 
     public static void report6(SistemaCentral manager, String frase) {
+        long inicio = System.currentTimeMillis();
         int count = 0;
         for (int i = 0; i < manager.getHashTweets().size(); i++) {
             Tweet tweet = manager.getHashTweets().get(manager.getHashTweets().getListaDeKeys().get(i));
@@ -200,5 +213,8 @@ public class Main {
             }
         }
         System.out.println("La cantidad de tweets con la frase \"" + frase + "\" es: " + count);
+        long fin = System.currentTimeMillis();
+        System.out.println("");
+        System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
     }
 }

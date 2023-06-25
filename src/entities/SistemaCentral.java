@@ -30,7 +30,7 @@ public class SistemaCentral {
 
     private MyHash<String, User> hashUsers = new MyClosedHashImpl<>(20000);
     private MyHash<Long, Tweet> hashTweets = new MyClosedHashImpl<>(200000);
-    private MyHash<Long, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
+    private MyHash<String, HashTag> hashHashtag = new MyClosedHashImpl<>(50000);
     private MyArrayList<String> drivers = new MyArrayListImpl<>(21);
     private long idUsers = 1;
     private long idHashtag = 1;
@@ -144,15 +144,18 @@ public class SistemaCentral {
                 hashtag = hashtag.substring(1, hashtag.length() - 1);
                 hashtag = hashtag.replace("'", " ");
                 String[] hashtags = hashtag.split(",");
-                for (String element : hashtags) { //hacemos un for each
-                    agregarHashtag(element);                }
+                //for (String element : hashtags) { //hacemos un for each
+                //    agregarHashtag(element);                }
                 String source = line[12];
                 boolean is_retweet = Boolean.parseBoolean(line[13]);
 
                 //Agregar las funciones
                 User user = agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
-                agregarTweet(tweet_id, date, text, source, is_retweet, user);
-                agregarHashtag(hashtag);
+                Tweet tweet = agregarTweet(tweet_id, date, text, source, is_retweet, user);
+                for (String element : hashtags) { //hacemos un for each
+                    agregarHashtag(element, tweet);
+                }
+
 
             }
             catch (Exception e){
@@ -180,30 +183,31 @@ public class SistemaCentral {
         return (hashUsers.get(user_name));
     }
 
-    public void agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet, User user) {
-        Tweet tweet;
-        if (!existeTweet(tweet_id)) {
+    public Tweet agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet, User user) {
+        Tweet tweet = existeTweet(tweet_id);
+        if (tweet == null) {
             tweet = new Tweet(tweet_id, date, content, source, is_retweet, user);
             hashTweets.put(tweet_id, tweet);
-            user.addTweet(tweet);
         }
+        user.addTweet(tweet);
+        return tweet;
     }
 
-    public boolean existeTweet(long tweet_id){
-        return (hashTweets.get(tweet_id)!= null);
+    public Tweet existeTweet(long tweet_id){
+        return (hashTweets.get(tweet_id));
     }
 
-    public void agregarHashtag(String text){
-        HashTag hashtag1;
-        if(!existeHashtag(idHashtag)){
+    public void agregarHashtag(String text, Tweet tweet){
+        HashTag hashtag1 = existeHashtag(text);
+        if(hashtag1 == null){
             hashtag1 = new HashTag(idHashtag, text);
-            hashHashtag.put(idHashtag, hashtag1);
+            hashHashtag.put(text, hashtag1);
             idHashtag++;
         }
+        hashtag1.addTweet(tweet);
     }
 
-    public boolean existeHashtag(Long idHashtag){
-        return (hashHashtag.get(idHashtag)!= null);
+    public HashTag existeHashtag(String textHashtag){return (hashHashtag.get(textHashtag));
     }
 
     //Report 1
@@ -315,11 +319,11 @@ public class SistemaCentral {
         this.hashTweets = hashTweets;
     }
 
-    public MyHash<Long, HashTag> getHashHashtag() {
+    public MyHash<String, HashTag> getHashHashtag() {
         return hashHashtag;
     }
 
-    public void setHashHashtag(MyHash<Long, HashTag> hashHashtag) {
+    public void setHashHashtag(MyHash<String, HashTag> hashHashtag) {
         this.hashHashtag = hashHashtag;
     }
     public MyArrayList<String> getDrivers() {
