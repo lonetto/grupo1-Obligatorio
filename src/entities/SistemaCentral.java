@@ -229,7 +229,6 @@ public class SistemaCentral {
         Calendar calendar = Calendar.getInstance();
 
         // Establecer el año, mes y día del objeto Calendar.
-        // Recuerda que en Java, los meses comienzan desde 0 (enero es 0, febrero es 1, etc.), así que es necesario restar 1 al mes.
         calendar.set(año, (mes + 1), 1);
         // Convertir el objeto Calendar a un objeto Date
         Date date = calendar.getTime();
