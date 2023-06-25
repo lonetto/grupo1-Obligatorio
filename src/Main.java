@@ -1,7 +1,4 @@
-import entities.HashTag;
-import entities.SistemaCentral;
-import entities.Tweet;
-import entities.User;
+import entities.*;
 import uy.edu.um.prog2.adt.tads.Heap.MyHeap;
 import uy.edu.um.prog2.adt.tads.Heap.MyHeapImpl;
 import uy.edu.um.prog2.adt.tads.Heap.exceptions.EmptyHeapException;
@@ -58,6 +55,7 @@ public class Main {
             }
 
             if (numeroIngresado == 1){
+                report1(manager);
 
             }
             else if (numeroIngresado == 2){
@@ -111,13 +109,24 @@ public class Main {
     public static void report1 (SistemaCentral manager) {
 
         //Permito ingresar los parametros de mes y año en la forma que se especifica en la letra
+        System.out.println("10 pilotos mas mencionados en un determinado mes");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese el mes (número) para filtrar los tweets: ");
-        int mes = Integer.parseInt(sc.nextLine());
-        System.out.println("Ingrese el año para filtrar los tweets: ");
+        System.out.println("Ingrese el año (2021 o 2022) para el que desea cosnultar: ");
         int año = Integer.parseInt(sc.nextLine());
+        System.out.println("Ingrese el mes (1 - 12) para el que desea consultar: ");
+        int mes = Integer.parseInt(sc.nextLine());
+        if(!(año == 2021 || año == 2022) || mes > 12 || mes < 1){
+            System.out.println("El año y/o mes ingresado es incorrecto");
+            return;
+        }
 
-        //
+        MyArrayList<Driver> x = manager.obtenerPilotos10MasMencionadosEnTweetsPorMesYAño(mes, año);
+        for(int i = 0; i < x.size(); i++){
+            System.out.println("En el puesto numero " + (i+1) + ":");
+            System.out.println("-->Piloto: " + x.get(i).getName());
+            System.out.println("-->Menciones en tweets: " + x.get(i).getMencionesEnRangoFecha());
+
+        }
 
     }
     public static void report2(SistemaCentral manager) throws EmptyHeapException {
