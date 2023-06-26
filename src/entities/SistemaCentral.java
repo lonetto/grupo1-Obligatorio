@@ -53,37 +53,9 @@ public class SistemaCentral {
                 .build();
 
         while ((line = csvReader.readNext()) != null) {
-            //String[] line = csvsample;
-            //i=i+1;
-            //System.out.println(i);
-           // if(line.length != 14){
-             //   line = procesarLine(line);
-               // System.out.println(line);
-            //}
             agregarTodo(line);
-
-
         }
     }
-
-    /*
-    private String[] procesarLine(String[] line) {
-        String [] nuevalinea = new String[14];
-        int i=0;
-        for (String item : line) {
-            String[] splitItem;
-            if(i==10 || i == 3 || item.contains("[")){splitItem = new String[]{item};}
-            else {  splitItem = item.split("\\,");}
-
-            for (String item2 : splitItem) {
-                nuevalinea[i]=item2;
-                i=i+1;
-            }
-        }
-        return  nuevalinea;
-    }
-
-     */
 
     public void cargarPilotos() {
         try {
@@ -134,22 +106,22 @@ public class SistemaCentral {
             String text = line[10];
             //Las siguientes 4 lineas son para parsear los hashtags de Array a tipo string por separado
             String hashtag = line[11];
-            if (!hashtag.isEmpty()) {
-                hashtag = hashtag.substring(1, hashtag.length() - 1);
-                hashtag = hashtag.replace("'", " ");
-                String[] hashtags = hashtag.split(",");
-                for (String element : hashtags) { //hacemos un for each
-                    agregarHashtag(element);
-                }
-            }
             String source = line[12];
             boolean is_retweet = Boolean.parseBoolean(line[13]);
 
             //Agregar las funciones
             User user = agregarUser(user_name, user_location, user_description, user_created, user_followers, user_friends, user_favourites, user_verified);
-            agregarTweet(tweet_id, date, text, source, is_retweet, user);
-            agregarHashtag(hashtag);
-            //agregarTweetsEnHashtag();
+            Tweet tweet = agregarTweet(tweet_id, date, text, source, is_retweet, user);
+            if (!hashtag.isEmpty()) {
+                hashtag = hashtag.substring(1, hashtag.length() - 1);
+                hashtag = hashtag.replace("'", "");
+                String[] hashtags = hashtag.split(",");
+                for (String element : hashtags) { //hacemos un for each
+                    agregarHashtag(element);
+                    HashTag hashtag1 = new HashTag(idHashtag, element);
+                    tweet.addHashTag(hashtag1);
+                }
+            }
         } catch (Exception e){
             //Algunas lineas estan mal redactadas, por lo que no se pueden parsear asi que se ignoran ya que son muy pocas
         }
@@ -171,13 +143,14 @@ public class SistemaCentral {
         return (hashUsers.get(user_name));
     }
 
-    public void agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet, User user) {
+    public Tweet agregarTweet(long tweet_id, Date date, String content, String source, boolean is_retweet, User user) {
         Tweet tweet;
         if (!existeTweet(tweet_id)) {
             tweet = new Tweet(tweet_id, date, content, source, is_retweet, user);
             hashTweets.put(tweet_id, tweet);
             user.addTweet(tweet);
         }
+        return hashTweets.get(tweet_id);
     }
 
     public boolean existeTweet(long tweet_id){
@@ -256,8 +229,32 @@ public class SistemaCentral {
 
         return pilotosMasMencionados;
     }
+    public void agregarTweetsEnHashtag(){
+    /*
+    for(int k = 0; k< hashHashtag.size(); k++){
+        String hashtagKey = hashHashtag.keyListaKeys(k);
+        HashTag hashtag = hashHashtag.get(hashtagKey);
+        hashtag.
+    }
+
+     */
 
 
+        for(int j = 0; j< hashHashtag.size(); j++) {
+            String hashtagKey = hashHashtag.keyListaKeys(j);
+            HashTag hashtag = hashHashtag.get(hashtagKey);
+            String nombreHashtag = hashtag.getText();
+
+            for (int i = 0; i < hashTweets.size(); i++) {
+                Long tweetsKey = hashTweets.keyListaKeys(i);
+                Tweet tweet = hashTweets.get(tweetsKey);
+
+                if(tweet.getContent().contains(nombreHashtag)) {
+                    hashtag.addTweet(tweet);
+                }
+            }
+        }
+    }
 
     //Report 2
     public MyArrayList<User> lista15UsuariosConMasTweets() {
@@ -293,69 +290,6 @@ public class SistemaCentral {
         }
         return usuariosTop15Tweets;
     }
-
-
-    public void agregarTweetsEnHashtag(){
-        /*
-        for(int k = 0; k< hashHashtag.size(); k++){
-            String hashtagKey = hashHashtag.keyListaKeys(k);
-            HashTag hashtag = hashHashtag.get(hashtagKey);
-            hashtag.
-        }
-
-         */
-
-
-        for(int j = 0; j< hashHashtag.size(); j++) {
-            String hashtagKey = hashHashtag.keyListaKeys(j);
-            HashTag hashtag = hashHashtag.get(hashtagKey);
-            String nombreHashtag = hashtag.getText();
-
-            for (int i = 0; i < hashTweets.size(); i++) {
-                Long tweetsKey = hashTweets.keyListaKeys(i);
-                Tweet tweet = hashTweets.get(tweetsKey);
-
-                if(tweet.getContent().contains(nombreHashtag)) {
-                    hashtag.addTweet(tweet);
-                }
-            }
-        }
-    }
-
-
-    //Report 3
-    public long cantHashtagsDistintosParaUnDia(String fecha) {
-        Date date = null;
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            date = formatter.parse(fecha);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (date == null) {
-            // Si el parsing falló, retornamos 0 para evitar NullPointerException
-            return 0;
-        }
-
-        long inicio = System.currentTimeMillis();
-        int count = 0;
-        for (int i = 0; i < getHashHashtag().size(); i++) {
-            HashTag hashtag = getHashHashtag().get(getHashHashtag().getListaDeKeys().get(i));
-            for (int j = 0; j < hashtag.getTweets().size(); j++) {
-                if (hashtag.getTweets().get(j).checkDate(date)) {
-                    count++;
-                    break;
-                }
-            }
-        }
-        long fin = System.currentTimeMillis();
-        System.out.println("");
-        System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
-        return count;
-    }
-
-
 
     //Report 5
     public MyArrayList<User> lista7UsuariosConMasFavoritos(){

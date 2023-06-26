@@ -1,4 +1,6 @@
 import entities.*;
+import uy.edu.um.prog2.adt.tads.Hash.MyClosedHashImpl;
+import uy.edu.um.prog2.adt.tads.Hash.MyHash;
 import uy.edu.um.prog2.adt.tads.Heap.MyHeap;
 import uy.edu.um.prog2.adt.tads.Heap.MyHeapImpl;
 import uy.edu.um.prog2.adt.tads.Heap.exceptions.EmptyHeapException;
@@ -62,7 +64,15 @@ public class Main {
                 report2(manager);
             }
             else if (numeroIngresado == 3){
-               report3(manager);
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Por favor, ingresa la fecha en el formato YYYY-MM-DD");
+                String inputDate = scanner.nextLine();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = null;
+                date = formatter.parse(inputDate);
+                System.out.println("Fecha ingresada: "+date+ " anio: " + date.getYear() +" mes: "+ date.getMonth() + " dia: "+ date.getDay());
+                int res = report3(manager, date);
+                System.out.println("La cantidad de hashtags distintos usados el " + date +" es: "+ res );
             }
             else if (numeroIngresado == 4){
                 Scanner scanner = new Scanner(System.in);
@@ -71,6 +81,7 @@ public class Main {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = null;
                 date = formatter.parse(inputDate);
+                System.out.println("La fecha ingresada es: " + date);
                 String mostUsedHashtag = report4(date, manager);
                 System.out.println("El hashtag más usado para la fecha ingresada es: " + mostUsedHashtag);
             }
@@ -117,7 +128,6 @@ public class Main {
             System.out.println("En el puesto numero " + (i+1) + ":");
             System.out.println("-->Piloto: " + x.get(i).getName());
             System.out.println("-->Menciones en tweets: " + x.get(i).getMencionesEnRangoFecha());
-
         }
 
     }
@@ -134,15 +144,22 @@ public class Main {
         System.out.println("Tiempo de ejecucion de la consulta: " + (fin-inicio) + "milisegundos");
     }
 
-        public static int report3( SistemaCentral manager) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Por favor, ingresa la fecha en el formato YYYY-MM-DD");
-            String inputDate = scanner.nextLine();
-        //int x = manager.cantHashtagsDistintosParaUnDia(inputDate);
-
-        //System.out.println("La cantidad de hashtags distintos para este dia es de: " + x);
-        return 0;
-
+    public static int report3(SistemaCentral manager, Date fecha) {
+        MyHash<String,HashTag> hashtagsunicos = new MyClosedHashImpl();
+        for(int i=0; i<manager.getHashTweets().size();i++){
+            long keytweet = manager.getHashTweets().getListaDeKeys().get(i);
+            Tweet tweet = manager.getHashTweets().get(keytweet);
+            Date date = tweet.getDate();
+            if (date.getYear() == fecha.getYear() && date.getMonth() == fecha.getMonth() && date.getDay() == fecha.getDay()){
+                for(int j=0; j<tweet.getHashtags().size();j++){
+                    HashTag hashtag = tweet.getHashtags().get(j);
+                    if(hashtagsunicos.get(hashtag.getText())==null){
+                        hashtagsunicos.put(hashtag.getText(), hashtag);
+                    }
+                }
+            }
+        }
+        return hashtagsunicos.size();
     }
 
 
@@ -165,7 +182,6 @@ public class Main {
                 }
             }
         }
-
         // Asegurarse de que mostUsed no es null antes de intentar acceder a su método getText
         if (mostUsed == null) {
             long fin = System.currentTimeMillis();

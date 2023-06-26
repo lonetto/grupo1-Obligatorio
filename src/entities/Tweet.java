@@ -1,6 +1,8 @@
 package entities;
 
+import uy.edu.um.prog2.adt.tads.ArrayList.MyArrayList;
 import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedList;
+import uy.edu.um.prog2.adt.tads.LinkedList.MyLinkedListImpl;
 
 import java.util.Date;
 
@@ -12,9 +14,7 @@ public class Tweet {
     private boolean isRetweet;
     private Date date;
     private User user;
-
-
-
+    private MyLinkedList<HashTag> hashtags;
     public Tweet(long id, Date date, String content, String source, boolean isRetweet, User user) {
         this.id = id;
         this.date = date;
@@ -22,12 +22,18 @@ public class Tweet {
         this.source = source;
         this.isRetweet = isRetweet;
         this.user = user;
+        this.hashtags = new MyLinkedListImpl<>();
     }
     //Agregamos funcion para consultas 3 y 4
     public boolean checkDate(Date date){
         return this.date.getDay() == date.getDay() && this.date.getMonth() == date.getMonth() && this.date.getYear() == date.getYear();
     }
-
+    public void addHashTag(HashTag hashTag){
+        hashtags.add(hashTag);
+    }
+    public MyLinkedList<HashTag> getHashtags(){
+        return hashtags;
+    }
     public long getId() {
         return id;
     }
